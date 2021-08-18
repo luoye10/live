@@ -102,111 +102,111 @@ body {
 	background-position: center center;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
-	.main {
+}
+</style>
+<style lang="less" scoped>
+.main {
+	width: 100%;
+	height: 100%;
+	.layout {
 		width: 100%;
 		height: 100%;
-		.layout {
-			width: 100%;
-			height: 100%;
-			.head {
-				height: 100px;
-				background: rgba(11, 209, 209, 0.774);
-				position: relative;
-				.logo {
+	}
+}
+.head {
+	height: 100px;
+	background: rgba(11, 209, 209, 0.774);
+	position: relative;
+	.logo {
+		display: inline-block;
+		vertical-align: middle;
+		.mark {
+			margin: 30px;
+			vertical-align: middle;
+		}
+		.text {
+			display: inline-block;
+			height: 30px;
+			font-size: 20px;
+			font-family: my;
+			color: aqua;
+			vertical-align: middle;
+			letter-spacing: 0.2em;
+		}
+	}
+	.search {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		font-family: my;
+		.words {
+			width: 200px;
+			height: 30px;
+			border: 1px solid aqua;
+			border-radius: 3px;
+			outline: none;
+			color: rgb(206, 27, 206);
+			background: pink;
+		}
+		.btn {
+			display: inline-block;
+			width: 100px;
+			height: 30px;
+			border: 1px solid aqua;
+			border-radius: 3px;
+			text-align: center;
+			line-height: 30px;
+			vertical-align: middle;
+			margin-left: 20px;
+			color: rgb(206, 27, 206);
+			cursor: pointer;
+		}
+	}
+}
+.inner {
+	height: 100%;
+	.menu {
+		width: 400px;
+		height: 100%;
+		background: rgba(18, 218, 124, 0.767);
+		.list {
+			height: 50px;
+			border: 1px dashed aqua;
+			color: white;
+			text-align: center;
+			line-height: 50px;
+		}
+	}
+	.reveal {
+		.song-list {
+		}
+		.song {
+			list-style: none;
+			height: 100px;
+			border: 1px solid aqua;
+			border-radius: 5px;
+			background: rgba(129, 89, 89, 0.493);
+			vertical-align: middle;
+			cursor: pointer;
+			margin: 20px;
+			.img {
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+				vertical-align: middle;
+			}
+			.content {
+				display: inline-block;
+				vertical-align: middle;
+				.name,
+				.singer,
+				.album,
+				.time {
 					display: inline-block;
 					vertical-align: middle;
-					.mark {
-						margin: 30px;
-						vertical-align: middle;
-					}
-					.text {
-						display: inline-block;
-						height: 30px;
-						font-size: 20px;
-						font-family: my;
-						color: aqua;
-						vertical-align: middle;
-						letter-spacing: 0.2em;
-					}
-				}
-				.search {
-					position: absolute;
-					left: 50%;
-					top: 50%;
-					transform: translate(-50%, -50%);
-					font-family: my;
-					.words {
-						width: 200px;
-						height: 30px;
-						border: 1px solid aqua;
-						border-radius: 3px;
-						outline: none;
-						color: rgb(206, 27, 206);
-						background: pink;
-					}
-					.btn {
-						display: inline-block;
-						width: 100px;
-						height: 30px;
-						border: 1px solid aqua;
-						border-radius: 3px;
-						text-align: center;
-						line-height: 30px;
-						vertical-align: middle;
-						margin-left: 20px;
-						color: rgb(206, 27, 206);
-						cursor: pointer;
-					}
-				}
-			}
-			.inner {
-				height: 100%;
-				.menu {
-					width: 400px;
-					height: 100%;
-					background: rgba(18, 218, 124, 0.767);
-					.song-sheet {
-						.list {
-							height: 50px;
-							border: 1px dashed aqua;
-							color: white;
-							text-align: center;
-							line-height: 50px;
-						}
-					}
-				}
-				.reveal {
-					.song-list {
-						.song {
-							list-style: none;
-							height: 100px;
-							border: 1px solid aqua;
-							border-radius: 5px;
-							background: rgba(129, 89, 89, 0.493);
-							vertical-align: middle;
-							cursor: pointer;
-							margin: 20px;
-							.img {
-								width: 50px;
-								height: 50px;
-								border-radius: 50%;
-								vertical-align: middle;
-							}
-							.content {
-								display: inline-block;
-								vertical-align: middle;
-								.name,
-								.singer,
-								.album,
-								.time {
-									display: inline-block;
-									vertical-align: middle;
-									color: aqua;
-									margin: 0 20px;
-								}
-							}
-						}
-					}
+					color: aqua;
+					margin: 0 20px;
 				}
 			}
 		}
