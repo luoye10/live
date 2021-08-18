@@ -70,7 +70,7 @@ export default {
 		},
 		query() {
 			if (!this.word) {
-				console.log('请输入要查询的关键词');
+				this.$message.warning('请输入要查询的关键词');
 				return;
 			}
 			api.query(this.word)
