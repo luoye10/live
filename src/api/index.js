@@ -10,4 +10,10 @@ export default {
 	getSongList: id => {
 		return axios.get('/user/playlist?uid=' + id);
 	},
+	getSong: songListId => {
+		return axios.get('/playlist/detail?id=' + songListId)
+	},
+	getMessage: songId => {
+		return axios.get('/song/url?id=' + songId)
+	}
 };
