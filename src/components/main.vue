@@ -1,6 +1,5 @@
 <template>
 	<div class="main">
-		<!-- <el-skeleton v-if="isLoading" :rows="6" animated /> -->
 		<div class="layout">
 			<!-- 头部 -->
 			<div class="head">
@@ -44,7 +43,6 @@ import axios from 'axios'
 export default {
 	data() {
 		return {
-			isLoading: true,
 			word: '',
 			items: [],
 			itemList: []
@@ -60,6 +58,7 @@ export default {
 			axios.get('https://btea.site/music/user/playlist?uid=' + id)
 			.then(function(response){
 				console.log(response)
+				console.log(this)
 				this.itemList = response.data.playList
 			})
 			.catch(function(error){
@@ -103,12 +102,13 @@ body{
 	.main{
 		width: 100%;
 		height: 100%;
+		position: relative;
 		.layout{
 			width: 100%;
 			height: 100%;
 			.head{
 				height: 100px;
-				background: rgba(11, 209, 209, 0.774);
+				background: rgba(11, 120, 209, 0.774);
 				position: relative;
 				.logo{
 					display: inline-block;
@@ -162,7 +162,7 @@ body{
 				.menu{
 					width: 400px;
 					height: 100%;
-					background: rgba(18, 218, 124, 0.767);
+					background: rgba(26, 88, 170, 0.596);
 					.song-sheet{
 						.list{
 							height: 50px;
