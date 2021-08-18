@@ -14,13 +14,13 @@
 	</div>
 </template>
 <script>
-import axios from 'axios'
+import api from '../api/index';
 export default {
 	data() {
 		return {
 			ruleForm: {
 				username: '',
-				password: ''
+				password: '',
 			},
 			rules: {
 				username: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
@@ -37,27 +37,28 @@ export default {
 				}
 				// rules 通过了，可以正式开始调接口登录
 				// console.log('start login');
-				this.loginRequest()
+				this.loginRequest();
 				// 调用登录接口，登录成功之后，开始跳转到别的组件
 			});
 		},
-		loginRequest(){
-			axios.get('https://btea.site/music/login/cellphone', {
+		loginRequest() {
+			api.login({
 				params: {
 					phone: this.ruleForm.username,
-					password: this.ruleForm.password
-				}
+					password: this.ruleForm.password,
+				},
 			})
-			.then(response => {
-				var obj = JSON.stringify(response.data)
-				localStorage.setItem('userInfo', obj)
-				this.$router.push({ name: 'main' });
-				console.log(response)
-			})
-			.catch(function(error){
-				console.log(error)
-			})
-		}
+				.then(response => {
+					var obj = JSON.stringify(response.data);
+					localStorage.setItem('userInfo', obj);
+					this.$message.success('登录成功');
+					this.$router.push({ name: 'main' });
+					console.log(response);
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+		},
 	},
 };
 </script>
