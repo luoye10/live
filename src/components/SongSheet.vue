@@ -1,12 +1,7 @@
 <template>
     <div class="songs">
         <ul class="song-list">
-            <li class="song" v-for="item in items" :key="item.message">
-                <span class="name">{{ item.name }}</span>
-                <span class="singer">{{ item.artists[0].name }}</span>
-                <span class="album">{{ item.album.name }}</span>
-                <span class="time">{{ item.duration }}</span>
-            </li>
+            <li class="song"></li>
         </ul>
     </div>
 </template>
@@ -63,15 +58,6 @@ export default {
         vertical-align: middle;
         cursor: pointer;
         margin: 20px;
-        .name,
-        .singer,
-        .album,
-        .time {
-            display: inline-block;
-            vertical-align: middle;
-            color: aqua;
-            margin: 0 20px;
-        }
     }
 }
 </style>

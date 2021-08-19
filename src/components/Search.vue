@@ -67,23 +67,31 @@ img,div,span,ul,li{
         line-height: 100px;
         cursor: pointer;
         margin: 20px;
-        position: relative;
         .img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
             vertical-align: middle;
-            margin: 0 20px;
+            line-height: 100px;
         }
         .content {
             display: inline-block;
             vertical-align: middle;
+            line-height: 100px;
             span{
                 display: inline-block;
-                margin: 0 60px;
                 color: aqua;
+                margin: 0 10px;
             }
-            
+            .name{
+                width: 150px;
+            }
+            .singer{
+                width: 100px;
+            }
+            .album{
+                width: 150px;
+            }
         }
     }
 }
