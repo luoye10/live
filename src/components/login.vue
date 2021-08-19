@@ -75,7 +75,6 @@ export default {
 		border-radius: 5px;
 		box-shadow: 0 0 10px 15px #f7f5f5;
 		text-align: center;
-		font-family: my;
 		/deep/ .el-form {
 			width: 200px;
 			margin: 0 auto;
