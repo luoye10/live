@@ -16,7 +16,14 @@
 				<!-- 左侧菜单 -->
 				<div class="menu">
 					<ul class="song-sheet">
-						<li class="list" v-for="list in itemList" :key="list.id" @click="press(list)">{{ list.name }}</li>
+						<li
+							:class="['list', { active: list.id === songListId }]"
+							v-for="list in itemList"
+							:key="list.id"
+							@click="songDetail(list)"
+						>
+							{{ list.name }}
+						</li>
 					</ul>
 				</div>
 				<!-- 右侧展示 -->
@@ -25,17 +32,23 @@
 			</div>
 
 			<!-- 底部 -->
+			<Player></Player>
+			<div class="footer">
+				<audio src="" class="audio-play"></audio>
+			</div>
 		</div>
 	</div>
 </template>
 <script>
 import api from '../api/index';
-import Search from './Search'
-import SongSheet from './SongSheet'
+import Search from './Search';
+import SongSheet from './SongSheet';
+import Player from './Player.vue';
 export default {
 	components: {
 		Search,
-		SongSheet
+		SongSheet,
+		Player,
 	},
 	data() {
 		return {
@@ -44,7 +57,7 @@ export default {
 			songListId: '',
 			total: [],
 			isShow: false,
-			isOpen: false
+			isOpen: true,
 		};
 	},
 	mounted() {
@@ -56,28 +69,33 @@ export default {
 			var id = obj.account.id;
 			api.getSongList(id)
 				.then(response => {
-					console.log(response)
 					this.itemList = response.data.playlist;
 				})
 				.catch(error => {
 					console.log(error);
-					this.$message.error('请求歌单列表错误');
+					this.$message.error('请求歌单详情错误');
 				});
 		},
-		press(list){
-			this.songListId = list.id
-			this.isOpen = !this.isOpen
-			this.isShow = false
+		songDetail(list) {
+			this.songListId = list.id;
+			this.isShow = false;
+			this.$children[0].getSong(list.id);
+			// console.log(this.$children);
 		},
 		query() {
-			this.isShow = !this.isShow
-			this.isOpen = false
-		}
+			this.isOpen = false;
+			this.isShow = true;
+		},
 	},
 };
 </script>
 <style lang="less">
-div,img,span,ul,li{
+div,
+img,
+input,
+span,
+ul,
+li {
 	margin: 0;
 	padding: 0;
 }
@@ -90,11 +108,10 @@ body {
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 }
-</style>
-<style lang="less" scoped>
 .main {
 	width: 100%;
 	height: 100%;
+	font-family: my;
 	.layout {
 		width: 100%;
 		height: 100%;
@@ -103,21 +120,27 @@ body {
 .head {
 	height: 100px;
 	background: rgba(11, 209, 209, 0.774);
-	position: relative;
+	vertical-align: middle;
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	z-index: 1;
 	.logo {
 		display: inline-block;
 		vertical-align: middle;
+		line-height: 100px;
 		.mark {
-			margin: 30px;
+			margin: 0 30px;
 			vertical-align: middle;
 		}
 		.text {
 			display: inline-block;
 			height: 30px;
-			font-size: 20px;
-			font-family: my;
+			font-size: 24px;
 			color: aqua;
 			vertical-align: middle;
+			line-height: 30px;
 			letter-spacing: 0.2em;
 		}
 	}
@@ -126,15 +149,16 @@ body {
 		left: 50%;
 		top: 50%;
 		transform: translate(-50%, -50%);
-		font-family: my;
 		.words {
+			display: inline-block;
 			width: 200px;
 			height: 30px;
 			border: 1px solid aqua;
-			border-radius: 3px;
+			border-radius: 5px;
 			outline: none;
 			color: rgb(206, 27, 206);
 			background: pink;
+			vertical-align: middle;
 		}
 		.btn {
 			display: inline-block;
@@ -153,17 +177,25 @@ body {
 }
 .inner {
 	height: 100%;
+	position: relative;
 	.menu {
-		width: 400px;
+		width: 30%;
 		height: 100%;
 		background: rgba(18, 218, 124, 0.767);
+		position: fixed;
+		left: 0;
+		top: 100px;
 		.list {
 			height: 50px;
 			border: 1px dashed aqua;
 			color: white;
 			text-align: center;
 			line-height: 50px;
+			font-size: 20px;
 			cursor: pointer;
+		}
+		.active {
+			background: red;
 		}
 	}
 }
