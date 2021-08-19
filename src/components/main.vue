@@ -16,7 +16,9 @@
 				<!-- 左侧菜单 -->
 				<div class="menu">
 					<ul class="song-sheet">
-						<li class="list" v-for="list in itemList" :key="list.id" @click="press(list)">{{ list.name }}</li>
+						<li class="list" v-for="list in itemList" :key="list.id" @click="songDetail(list)">
+							{{ list.name }}
+						</li>
 					</ul>
 				</div>
 				<!-- 右侧展示 -->
@@ -25,17 +27,20 @@
 			</div>
 
 			<!-- 底部 -->
+			<div class="footer">
+				<audio src="" class="audio-play"></audio>
+			</div>
 		</div>
 	</div>
 </template>
 <script>
 import api from '../api/index';
-import Search from './Search'
-import SongSheet from './SongSheet'
+import Search from './Search';
+import SongSheet from './SongSheet';
 export default {
 	components: {
 		Search,
-		SongSheet
+		SongSheet,
 	},
 	data() {
 		return {
@@ -44,7 +49,7 @@ export default {
 			songListId: '',
 			total: [],
 			isShow: false,
-			isOpen: false
+			isOpen: false,
 		};
 	},
 	mounted() {
@@ -56,28 +61,32 @@ export default {
 			var id = obj.account.id;
 			api.getSongList(id)
 				.then(response => {
-					console.log(response)
+					console.log(response);
 					this.itemList = response.data.playlist;
 				})
 				.catch(error => {
 					console.log(error);
-					this.$message.error('请求歌单列表错误');
+					this.$message.error('请求歌单详情错误');
 				});
 		},
-		press(list){
-			this.songListId = list.id
-			this.isOpen = !this.isOpen
-			this.isShow = false
+		songDetail(list) {
+			this.songListId = list.id;
+			this.isOpen = !this.isOpen;
+			this.isShow = false;
 		},
 		query() {
-			this.isShow = !this.isShow
-			this.isOpen = false
-		}
+			this.isShow = !this.isShow;
+			this.isOpen = false;
+		},
 	},
 };
 </script>
 <style lang="less">
-div,img,span,ul,li{
+div,
+img,
+span,
+ul,
+li {
 	margin: 0;
 	padding: 0;
 }
@@ -153,6 +162,7 @@ body {
 }
 .inner {
 	height: 100%;
+	position: relative;
 	.menu {
 		width: 400px;
 		height: 100%;
