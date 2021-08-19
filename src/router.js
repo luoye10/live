@@ -12,16 +12,6 @@ const routes = [
         path: '/main',
         name: 'main',
         component: () => import('./components/main.vue')
-    },
-    {
-        path: '/Search',
-        name: 'Search',
-        component: () => import('./components/Search.vue')
-    },
-    {
-        path: '/SongSheet',
-        name: 'SongSheet',
-        component: () => import('./components/SongSheet.vue')
     }
 ];
 
