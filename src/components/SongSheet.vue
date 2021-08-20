@@ -61,7 +61,7 @@ export default {
 				}
 				item.url = url;
 				let obj = item;
-				this.$emit('songdata', obj);
+				this.$emit('songList', obj);
 			});
 		},
 	},

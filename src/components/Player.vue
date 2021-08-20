@@ -18,7 +18,7 @@
 // import api from '../api/index'
 // import format from '../tool'
 export default {
-	props: ['songMsg', 'songNew'],
+	props: ['listMsg', 'searchMsg'],
 	data() {
 		return {
 			isPlay: false,
@@ -28,10 +28,12 @@ export default {
 			audio: null,
 			timer: null,
 			name: '',
+			progress: '',
 		};
 	},
 	mounted() {
 		this.audio = document.querySelectorAll('audio')[0];
+		this.progress = document.querySelectorAll('.progress')[0];
 	},
 	methods: {
 		button() {
@@ -71,11 +73,11 @@ export default {
 		next() {},
 	},
 	watch: {
-		songMsg(newVal, oldVal) {
+		listMsg(newVal, oldVal) {
 			console.log(oldVal);
 			this.play(newVal);
 		},
-		songNew(newVal, oldVal) {
+		searchMsg(newVal, oldVal) {
 			console.log(oldVal);
 			this.play(newVal);
 		},

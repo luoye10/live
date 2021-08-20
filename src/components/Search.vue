@@ -55,7 +55,7 @@ export default {
 				}
 				item.url = url;
 				let obj = item;
-				this.$emit('songnews', obj);
+				this.$emit('songSearch', obj);
 			});
 		},
 	},

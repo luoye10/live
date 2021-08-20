@@ -27,13 +27,13 @@
 					</ul>
 				</div>
 				<!-- 搜索结果 -->
-				<Search v-if="isShow" :word="word" @songnews="getNews"></Search>
+				<Search v-if="isShow" :word="word" @songSearch="getSearch"></Search>
 				<!-- 歌单列表详情 -->
-				<SongSheet :id="songListId" v-if="!isShow" @songdata="getData"></SongSheet>
+				<SongSheet :id="songListId" v-if="!isShow" @songList="getList"></SongSheet>
 			</div>
 
 			<!-- 底部 -->
-			<Player :songMsg="songMsg" :songNew="songNew"></Player>
+			<Player :listMsg="listMsg" :songSearch="searchMsg"></Player>
 			<div class="footer">
 				<audio src="" class="audio-play"></audio>
 			</div>
@@ -58,8 +58,8 @@ export default {
 			songListId: '',
 			total: [],
 			isShow: false,
-			songMsg: '',
-			songNew: '',
+			listMsg: '',
+			searchMsg: '',
 			// isOpen: true, 一直设置为true，不改变，那它就没必要
 		};
 	},
@@ -86,11 +86,11 @@ export default {
 		query() {
 			this.isShow = true;
 		},
-		getData(para) {
-			this.songMsg = para;
+		getList(para) {
+			this.listMsg = para;
 		},
-		getNews(para) {
-			this.songNew = para;
+		getSearch(para) {
+			this.searchMsg = para;
 		},
 	},
 };
