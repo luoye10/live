@@ -3,8 +3,9 @@
 		<span class="name">{{ this.name }}</span>
 		<i class="el-icon-caret-left left" @click="prev"></i>
 		<div @click="button" class="btn">
-			<i class="el-icon-video-pause" v-show="isPlay"></i>
-			<i class="el-icon-video-play" v-show="!isPlay"></i>
+			<i :class="isPlay ? 'el-icon-video-pause' : 'el-icon-video-play'"></i>
+			<!-- <i class="el-icon-video-pause" v-show="isPlay"></i> -->
+			<!-- <i class="el-icon-video-play" v-show="!isPlay"></i> -->
 		</div>
 		<i class="el-icon-caret-right right" @click="next"></i>
 		<div class="nowTime">{{ this.currentTime }}</div>
@@ -68,29 +69,32 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-div,
-span,
-i {
-	margin: 0;
-	padding: 0;
-}
+// 这里没必要，这几个默认就是margin和padding都为0
+// 而且你这种统一的样式处理没必要每个组件都写，你只要写在一个css文件里面，然后再main.js引入一次就行了
+// div,
+// span,
+// i {
+// 	margin: 0;
+// 	padding: 0;
+// }
+@h: 60px;
 .play-box {
 	width: 100%;
-	height: 100px;
-	border-top: 1px solid aqua;
+	height: @h;
+	border-top: 1px solid #aaa;
 	position: fixed;
 	bottom: 0;
 	left: 0;
-	background: rgba(138, 175, 223, 0.616);
+	background: #fff;
 	vertical-align: middle;
 	text-align: center;
-	line-height: 100px;
+	line-height: @h;
 	.name {
 		display: inline-block;
 		width: 20%;
-		color: rgba(196, 25, 153, 0.699);
+		// color: rgba(196, 25, 153, 0.699);
 		vertical-align: middle;
-		line-height: 100px;
+		line-height: @h;
 		text-align: left;
 	}
 	.left,
@@ -98,7 +102,7 @@ i {
 	.right {
 		display: inline-block;
 		font-size: 30px;
-		color: aqua;
+		// color: aqua;
 		cursor: pointer;
 		margin: 0 10px;
 		vertical-align: middle;
@@ -108,30 +112,32 @@ i {
 		width: 10%;
 		height: 20px;
 		margin: 0 10px;
-		color: rgba(146, 22, 204, 0.747);
+		// color: rgba(146, 22, 204, 0.747);
 		vertical-align: middle;
 		line-height: 20px;
 	}
 	.progress {
 		display: inline-block;
 		width: 40%;
-		height: 20px;
-		border: 1px solid aqua;
-		border-radius: 20px;
+		height: 10px;
+		// border: 1px solid #aaa;
+		background: rgba(170, 170, 170, 0.3);
+		border-radius: 10px;
 		vertical-align: middle;
+		overflow: hidden;
 		.now {
 			width: 0;
-			height: 20px;
+			height: 10px;
 			cursor: pointer;
-			border-radius: 20px;
-			background: rgba(209, 44, 22, 0.87);
+			border-radius: 10px;
+			background: rgba(209, 44, 22, 0.5);
 		}
 	}
 	.end {
 		display: inline-block;
 		width: 10%;
 		height: 20px;
-		color: rgba(202, 39, 162, 0.753);
+		// color: rgba(202, 39, 162, 0.753);
 	}
 }
 </style>

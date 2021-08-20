@@ -102,7 +102,7 @@ li {
 body {
 	width: 100%;
 	height: 100%;
-	background: url(https://img-qn-2.51miz.com/Element/00/73/41/22/3d6d6458_E734122_dcb07fcd.jpg!/quality/90/unsharp/true/compress/true/format/jpg/fh/260);
+	// background: url(https://img-qn-2.51miz.com/Element/00/73/41/22/3d6d6458_E734122_dcb07fcd.jpg!/quality/90/unsharp/true/compress/true/format/jpg/fh/260);
 	background-size: cover;
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -112,6 +112,7 @@ body {
 	width: 100%;
 	height: 100%;
 	font-family: my;
+	color: #000;
 	.layout {
 		width: 100%;
 		height: 100%;
@@ -119,7 +120,7 @@ body {
 }
 .head {
 	height: 100px;
-	background: rgba(11, 209, 209, 0.774);
+	// background: rgba(11, 209, 209, 0.774);
 	vertical-align: middle;
 	position: fixed;
 	left: 0;
@@ -138,7 +139,7 @@ body {
 			display: inline-block;
 			height: 30px;
 			font-size: 24px;
-			color: aqua;
+			// color: aqua;
 			vertical-align: middle;
 			line-height: 30px;
 			letter-spacing: 0.2em;
@@ -153,24 +154,24 @@ body {
 			display: inline-block;
 			width: 200px;
 			height: 30px;
-			border: 1px solid aqua;
+			// border: 1px solid aqua;
 			border-radius: 5px;
 			outline: none;
-			color: rgb(206, 27, 206);
-			background: pink;
+			// color: rgb(206, 27, 206);
+			// background: pink;
 			vertical-align: middle;
 		}
 		.btn {
 			display: inline-block;
 			width: 100px;
 			height: 30px;
-			border: 1px solid aqua;
+			// border: 1px solid aqua;
 			border-radius: 3px;
 			text-align: center;
 			line-height: 30px;
 			vertical-align: middle;
 			margin-left: 20px;
-			color: rgb(206, 27, 206);
+			// color: rgb(206, 27, 206);
 			cursor: pointer;
 		}
 	}
@@ -181,21 +182,21 @@ body {
 	.menu {
 		width: 30%;
 		height: 100%;
-		background: rgba(18, 218, 124, 0.767);
+		// background: rgba(18, 218, 124, 0.767);
 		position: fixed;
 		left: 0;
 		top: 100px;
 		.list {
 			height: 50px;
-			border: 1px dashed aqua;
-			color: white;
+			// border: 1px dashed aqua;
+			// color: white;
 			text-align: center;
 			line-height: 50px;
 			font-size: 20px;
 			cursor: pointer;
 		}
 		.active {
-			background: red;
+			background: rgba(170, 170, 170, 0.5);
 		}
 	}
 }

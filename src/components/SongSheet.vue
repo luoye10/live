@@ -71,24 +71,24 @@ export default {
 </script>
 <style lang="less" scoped>
 @h: 50px;
-@c: aqua;
+@c: #000;
 .songs {
 	position: absolute;
 	top: 100px;
 	bottom: 0;
 	left: 30%;
 	right: 0;
-	background: rgba(170, 170, 170, 0.5);
+	background: rgba(170, 170, 170, 0.1);
 	.song {
 		height: @h;
 		color: @c;
 		font-size: 20px;
-		background: rgba(14, 148, 182, 0.705);
+		// background: rgba(14, 148, 182, 0.705);
 		list-style: none;
 		cursor: pointer;
 		// 偶数选择器
 		&:nth-child(even) {
-			background: rgba(170, 170, 170, 0.6);
+			background: rgba(170, 170, 170, 0.2);
 		}
 		.item {
 			display: inline-block;
@@ -111,7 +111,7 @@ export default {
 		}
 	}
 	.active {
-		background: rgba(14, 212, 31, 0.74);
+		background: rgba(170, 170, 170, 0.3);
 	}
 }
 </style>
