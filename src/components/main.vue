@@ -26,9 +26,10 @@
 						</li>
 					</ul>
 				</div>
-				<!-- 右侧展示 -->
+				<!-- 搜索结果 -->
 				<Search v-if="isShow" :word="word"></Search>
-				<SongSheet v-if="isOpen" :id="songListId"></SongSheet>
+				<!-- 歌单列表详情 -->
+				<SongSheet :id="songListId"></SongSheet>
 			</div>
 
 			<!-- 底部 -->
@@ -57,7 +58,7 @@ export default {
 			songListId: '',
 			total: [],
 			isShow: false,
-			isOpen: true,
+			// isOpen: true, 一直设置为true，不改变，那它就没必要
 		};
 	},
 	mounted() {
@@ -77,9 +78,9 @@ export default {
 				});
 		},
 		songDetail(list) {
-			this.songListId = list.id;
+			this.songListId = list.id; // 这里修改了songListId的值，同过id属性传递给songsheet的值也会发生变化，就会触发里面的watch
 			this.isShow = false;
-			this.$children[0].getSong(list.id);
+			// this.$children[0].getSong(list.id);
 			// console.log(this.$children);
 		},
 		query() {
