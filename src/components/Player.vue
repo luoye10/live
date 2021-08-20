@@ -43,7 +43,11 @@ export default {
 		},
 		play(para) {
 			this.name = para.name;
-			this.allTime = para.duration;
+			if (typeof para.duration === 'string') {
+				this.allTime = para.duration;
+			} else {
+				this.allTime = para.dt;
+			}
 			this.audio.src = para.url;
 			this.audio.play();
 			this.isPlay = true;

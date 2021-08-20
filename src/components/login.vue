@@ -49,11 +49,15 @@ export default {
 				},
 			})
 				.then(response => {
-					var obj = JSON.stringify(response.data);
+					const data = response.data;
+					if (data.code !== 200) {
+						this.$message.error(data.msg || '账号或密码错误');
+						return;
+					}
+					var obj = JSON.stringify(data);
 					localStorage.setItem('userInfo', obj);
 					this.$message.success('登录成功');
 					this.$router.push({ name: 'main' });
-					// console.log(response);
 				})
 				.catch(function (error) {
 					console.log(error);
