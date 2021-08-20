@@ -83,7 +83,6 @@ export default {
 		height: @h;
 		color: @c;
 		font-size: 20px;
-		// background: rgba(14, 148, 182, 0.705);
 		list-style: none;
 		cursor: pointer;
 		// 偶数选择器
@@ -111,7 +110,7 @@ export default {
 		}
 	}
 	.active {
-		background: rgba(170, 170, 170, 0.3);
+		background: rgba(39, 96, 143, 0.582);
 	}
 }
 </style>

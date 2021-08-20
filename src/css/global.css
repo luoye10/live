@@ -1,4 +1,17 @@
-@font-face{
-    font-family: my;
-    src: url(../font/a.ttf);
+@font-face {
+	font-family: my;
+	src: url(../font/a.ttf);
+}
+div,
+span,
+img,
+ul,
+li,
+input {
+	margin: 0;
+	padding: 0;
+}
+body {
+	width: 100%;
+	height: 100%;
 }

@@ -4,8 +4,6 @@
 		<i class="el-icon-caret-left left" @click="prev"></i>
 		<div @click="button" class="btn">
 			<i :class="isPlay ? 'el-icon-video-pause' : 'el-icon-video-play'"></i>
-			<!-- <i class="el-icon-video-pause" v-show="isPlay"></i> -->
-			<!-- <i class="el-icon-video-play" v-show="!isPlay"></i> -->
 		</div>
 		<i class="el-icon-caret-right right" @click="next"></i>
 		<div class="nowTime">{{ this.currentTime }}</div>
@@ -18,6 +16,7 @@
 </template>
 <script>
 // import api from '../api/index'
+// import format from '../tool'
 export default {
 	data() {
 		return {
@@ -69,14 +68,6 @@ export default {
 };
 </script>
 <style lang="less" scoped>
-// 这里没必要，这几个默认就是margin和padding都为0
-// 而且你这种统一的样式处理没必要每个组件都写，你只要写在一个css文件里面，然后再main.js引入一次就行了
-// div,
-// span,
-// i {
-// 	margin: 0;
-// 	padding: 0;
-// }
 @h: 60px;
 .play-box {
 	width: 100%;
@@ -92,7 +83,6 @@ export default {
 	.name {
 		display: inline-block;
 		width: 20%;
-		// color: rgba(196, 25, 153, 0.699);
 		vertical-align: middle;
 		line-height: @h;
 		text-align: left;
@@ -101,8 +91,7 @@ export default {
 	.btn,
 	.right {
 		display: inline-block;
-		font-size: 30px;
-		// color: aqua;
+		font-size: 25px;
 		cursor: pointer;
 		margin: 0 10px;
 		vertical-align: middle;
@@ -112,7 +101,6 @@ export default {
 		width: 10%;
 		height: 20px;
 		margin: 0 10px;
-		// color: rgba(146, 22, 204, 0.747);
 		vertical-align: middle;
 		line-height: 20px;
 	}
@@ -120,7 +108,6 @@ export default {
 		display: inline-block;
 		width: 40%;
 		height: 10px;
-		// border: 1px solid #aaa;
 		background: rgba(170, 170, 170, 0.3);
 		border-radius: 10px;
 		vertical-align: middle;
@@ -137,7 +124,6 @@ export default {
 		display: inline-block;
 		width: 10%;
 		height: 20px;
-		// color: rgba(202, 39, 162, 0.753);
 	}
 }
 </style>

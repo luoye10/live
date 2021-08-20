@@ -53,7 +53,7 @@ export default {
 					localStorage.setItem('userInfo', obj);
 					this.$message.success('登录成功');
 					this.$router.push({ name: 'main' });
-					console.log(response);
+					// console.log(response);
 				})
 				.catch(function (error) {
 					console.log(error);

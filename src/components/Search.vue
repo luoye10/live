@@ -32,6 +32,7 @@ export default {
 			}
 			api.query(this.word)
 				.then(response => {
+					console.log(response);
 					const list = response.data.result.songs;
 					const items = list.map(item => {
 						item.img = item.artists[0].img1v1Url;
@@ -46,18 +47,22 @@ export default {
 					console.log(error);
 				});
 		},
+		button(item) {
+			api.getMessage(item.id).then(response => {
+				const url = response.data.data[0].url;
+				if (!url) {
+					this.$message.error('没有播放资源');
+					return;
+				}
+				item.url = url;
+				console.log(this.$parent.$children[0].play(item));
+				this.$parent.$children[0].play(item);
+			});
+		},
 	},
 };
 </script>
 <style lang="less" scoped>
-img,
-div,
-span,
-ul,
-li {
-	margin: 0;
-	padding: 0;
-}
 .reveal {
 	position: absolute;
 	left: 30%;
