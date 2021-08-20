@@ -48,6 +48,7 @@ export default {
 				});
 		},
 		button(item) {
+			console.log(item);
 			api.getMessage(item.id).then(response => {
 				const url = response.data.data[0].url;
 				if (!url) {
@@ -68,16 +69,18 @@ export default {
 	left: 30%;
 	top: 100px;
 	right: 0;
+	margin: 10px;
+	margin-bottom: 100px;
 	.song {
 		list-style: none;
 		height: 100px;
-		border: 1px solid aqua;
 		border-radius: 5px;
-		background: rgba(129, 89, 89, 0.493);
 		vertical-align: middle;
 		line-height: 100px;
 		cursor: pointer;
-		margin: 20px;
+		&:nth-child(odd) {
+			background: rgba(129, 113, 113, 0.281);
+		}
 		.img {
 			width: 50px;
 			height: 50px;
@@ -89,21 +92,20 @@ export default {
 		.item {
 			display: inline-block;
 			vertical-align: middle;
-			text-align: center;
-			color: aqua;
 			font-size: 20px;
 		}
 		.name {
-			width: 30%;
+			width: 25%;
+			margin-left: 50px;
 		}
 		.singer {
 			width: 15%;
 		}
 		.album {
-			width: 30%;
+			width: 35%;
 		}
 		.time {
-			width: 10%;
+			width: 5%;
 		}
 	}
 }

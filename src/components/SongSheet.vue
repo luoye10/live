@@ -69,7 +69,7 @@ export default {
 	},
 	watch: {
 		id(newVal, oldVal) {
-			// newVal 就是id原来的值，newVal就是id改变之后的新值
+			// oldVal 就是id原来的值，newVal就是id改变之后的新值
 			console.log(oldVal);
 			this.getSong(newVal);
 		},
