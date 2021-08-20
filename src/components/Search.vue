@@ -32,7 +32,6 @@ export default {
 			}
 			api.query(this.word)
 				.then(response => {
-					console.log(response);
 					const list = response.data.result.songs;
 					const items = list.map(item => {
 						item.img = item.artists[0].img1v1Url;
@@ -48,7 +47,6 @@ export default {
 				});
 		},
 		button(item) {
-			console.log(item);
 			api.getMessage(item.id).then(response => {
 				const url = response.data.data[0].url;
 				if (!url) {
@@ -56,8 +54,8 @@ export default {
 					return;
 				}
 				item.url = url;
-				console.log(this.$parent.$children[0].play(item));
-				this.$parent.$children[0].play(item);
+				let obj = item;
+				this.$emit('songnews', obj);
 			});
 		},
 	},

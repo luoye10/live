@@ -2,7 +2,7 @@
 	<div class="songs">
 		<ul class="song-list">
 			<li
-				:class="['song', { active: item.message === item.name }]"
+				:class="['song', { active: item.id === id }]"
 				v-for="item in items"
 				:key="item.message"
 				@click="playSong(item)"
@@ -23,17 +23,14 @@ export default {
 	data() {
 		return {
 			items: [],
-			total: null,
-			idList: [],
-			songId: null,
 		};
 	},
 	mounted() {
-		// this.getSong();
+		this.getSong();
 	},
 	methods: {
-		getSong(id) {
-			api.getSong(id)
+		getSong() {
+			api.getSong(this.id)
 				.then(response => {
 					// this.total = response.data.playlist.trackCount;
 					// 你知道这一步是在做什么吗？循环，你把每一个id都赋值给songId，后面的会覆盖前面的，最终就是把最后一个id赋值给this.songId,这有什么意义吗？
@@ -63,7 +60,8 @@ export default {
 					return;
 				}
 				item.url = url;
-				this.$parent.$children[1].play(item);
+				let obj = item;
+				this.$emit('songdata', obj);
 			});
 		},
 	},

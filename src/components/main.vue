@@ -27,13 +27,13 @@
 					</ul>
 				</div>
 				<!-- 搜索结果 -->
-				<Search v-if="isShow" :word="word"></Search>
+				<Search v-if="isShow" :word="word" @songnews="getNews"></Search>
 				<!-- 歌单列表详情 -->
-				<SongSheet :id="songListId" v-if="!isShow"></SongSheet>
+				<SongSheet :id="songListId" v-if="!isShow" @songdata="getData"></SongSheet>
 			</div>
 
 			<!-- 底部 -->
-			<Player></Player>
+			<Player :songMsg="songMsg" :songNew="songNew"></Player>
 			<div class="footer">
 				<audio src="" class="audio-play"></audio>
 			</div>
@@ -58,6 +58,8 @@ export default {
 			songListId: '',
 			total: [],
 			isShow: false,
+			songMsg: '',
+			songNew: '',
 			// isOpen: true, 一直设置为true，不改变，那它就没必要
 		};
 	},
@@ -80,11 +82,15 @@ export default {
 		songDetail(list) {
 			this.songListId = list.id; // 这里修改了songListId的值，同过id属性传递给songsheet的值也会发生变化，就会触发里面的watch
 			this.isShow = false;
-			console.log(this.$children[0].getSong(list.id));
-			this.$children[0].getSong(list.id);
 		},
 		query() {
 			this.isShow = true;
+		},
+		getData(para) {
+			this.songMsg = para;
+		},
+		getNews(para) {
+			this.songNew = para;
 		},
 	},
 };

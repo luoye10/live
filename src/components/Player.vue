@@ -18,6 +18,7 @@
 // import api from '../api/index'
 // import format from '../tool'
 export default {
+	props: ['songMsg', 'songNew'],
 	data() {
 		return {
 			isPlay: false,
@@ -68,6 +69,16 @@ export default {
 		get() {},
 		prev() {},
 		next() {},
+	},
+	watch: {
+		songMsg(newVal, oldVal) {
+			console.log(oldVal);
+			this.play(newVal);
+		},
+		songNew(newVal, oldVal) {
+			console.log(oldVal);
+			this.play(newVal);
+		},
 	},
 };
 </script>
