@@ -3,7 +3,7 @@
 		<div class="list-box">
 			<ul class="song-list">
 				<li
-					:class="['song', { active: item.id === id }]"
+					:class="['song', { active: item.id === songId }]"
 					v-for="item in items"
 					:key="item.message"
 					@click="playSong(item)"
@@ -26,6 +26,7 @@ export default {
 		return {
 			items: [],
 			loading: false,
+			songId: '',
 		};
 	},
 	mounted() {
@@ -68,6 +69,7 @@ export default {
 		// 这里是获取歌曲详情，要先把歌单里每一首歌的名字查询出来之后进行点击才能明确查询哪一首歌
 		// 你直接在mounted里面进行调用，组件一开始渲染这里就会马上调用，此时的this.songId根本不存在，肯定不对
 		playSong(item) {
+			this.songId = item.id;
 			api.getMessage(item.id).then(response => {
 				const url = response.data.data[0].url;
 				if (!url) {
@@ -81,9 +83,8 @@ export default {
 		},
 	},
 	watch: {
-		id(newVal, oldVal) {
+		id(newVal) {
 			// oldVal 就是id原来的值，newVal就是id改变之后的新值
-			console.log(oldVal);
 			this.getSong(newVal);
 		},
 	},
@@ -96,7 +97,7 @@ export default {
 	position: absolute;
 	top: 100px;
 	bottom: 60px;
-	left: 30%;
+	left: 20%;
 	right: 0;
 	background: rgba(170, 170, 170, 0.1);
 	.list-box {
@@ -133,7 +134,7 @@ export default {
 			width: 10%;
 		}
 	}
-	.active {
+	.song.active {
 		background: rgba(39, 96, 143, 0.582);
 	}
 }

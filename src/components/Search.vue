@@ -64,11 +64,14 @@ export default {
 <style lang="less" scoped>
 .reveal {
 	position: absolute;
-	left: 30%;
+	left: 20%;
 	top: 100px;
 	right: 0;
-	margin: 10px;
-	margin-bottom: 100px;
+	bottom: 60px;
+	.song-list {
+		height: 100%;
+		overflow-y: auto;
+	}
 	.song {
 		list-style: none;
 		height: 100px;
@@ -93,8 +96,7 @@ export default {
 			font-size: 20px;
 		}
 		.name {
-			width: 25%;
-			margin-left: 50px;
+			width: 30%;
 		}
 		.singer {
 			width: 15%;
@@ -103,7 +105,7 @@ export default {
 			width: 35%;
 		}
 		.time {
-			width: 5%;
+			width: 10%;
 		}
 	}
 }
