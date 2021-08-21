@@ -30,8 +30,8 @@
 				<Search v-if="isShow" :word="word" @songSearch="getSearch"></Search>
 				<!-- 歌单列表详情 -->
 				<SongSheet :id="songListId" v-if="!isShow" @songList="getList"></SongSheet>
-				<SongLyric :id="songId"></SongLyric>
 			</div>
+			<SongLyric :id="songId"></SongLyric>
 
 			<!-- 底部 -->
 			<Player :songList="listMsg" :songSearch="searchMsg" @songLyric="getLyric"></Player>

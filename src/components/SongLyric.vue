@@ -46,6 +46,9 @@ export default {
 </script>
 <style lang="less" scoped>
 .lyrics {
+	width: 800px;
+	height: 600px;
+	background: grey;
 	.lyric-list {
 		width: 400px;
 		height: 600px;
