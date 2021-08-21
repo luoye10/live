@@ -163,10 +163,11 @@ export default {
 	position: relative;
 	.menu {
 		width: 30%;
-		height: 100%;
-		position: fixed;
+		position: absolute;
 		left: 0;
 		top: 100px;
+		bottom: 60px;
+		overflow-y: auto;
 		.list {
 			height: 50px;
 			text-align: center;

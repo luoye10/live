@@ -1,18 +1,20 @@
 <template>
-	<div class="songs">
-		<ul class="song-list">
-			<li
-				:class="['song', { active: item.id === id }]"
-				v-for="item in items"
-				:key="item.message"
-				@click="playSong(item)"
-			>
-				<span class="name item">{{ item.name }}</span>
-				<span class="singer item">{{ item.singer }}</span>
-				<span class="album item">{{ item.album }}</span>
-				<span class="time item">{{ item.duration }}</span>
-			</li>
-		</ul>
+	<div class="songs" v-loading="loading">
+		<div class="list-box">
+			<ul class="song-list">
+				<li
+					:class="['song', { active: item.id === id }]"
+					v-for="item in items"
+					:key="item.message"
+					@click="playSong(item)"
+				>
+					<span class="name item">{{ item.name }}</span>
+					<span class="singer item">{{ item.singer }}</span>
+					<span class="album item">{{ item.album }}</span>
+					<span class="time item">{{ item.duration }}</span>
+				</li>
+			</ul>
+		</div>
 	</div>
 </template>
 <script>
@@ -23,6 +25,7 @@ export default {
 	data() {
 		return {
 			items: [],
+			loading: false,
 		};
 	},
 	mounted() {
@@ -31,6 +34,7 @@ export default {
 	},
 	methods: {
 		getSong() {
+			this.loading = true;
 			api.getSong(this.id)
 				.then(response => {
 					// this.total = response.data.playlist.trackCount;
@@ -38,17 +42,27 @@ export default {
 					// this.idList.forEach(item => {
 					// 	this.songId = item.id;
 					// });
-					const list = response.data.playlist.tracks;
-					const items = list.map(item => {
-						item.duration = format(item.dt);
-						item.singer = item.ar.map(ar => ar.name).join('/');
-						item.album = item.al.name;
-						return item;
+
+					const trackIds = response.data.playlist.trackIds
+						.map(track => {
+							return track.id;
+						})
+						.join(',');
+					api.getSongs(trackIds).then(res => {
+						const songs = res.data.songs;
+						const items = songs.map(item => {
+							item.duration = format(item.dt);
+							item.singer = item.ar.map(ar => ar.name).join('/');
+							item.album = item.al.name;
+							return item;
+						});
+						this.items = items;
+						this.loading = false;
 					});
-					this.items = items;
 				})
 				.catch(function (error) {
 					console.log(error);
+					this.loading = false;
 				});
 		},
 		// 这里是获取歌曲详情，要先把歌单里每一首歌的名字查询出来之后进行点击才能明确查询哪一首歌
@@ -81,10 +95,14 @@ export default {
 .songs {
 	position: absolute;
 	top: 100px;
-	bottom: 0;
+	bottom: 60px;
 	left: 30%;
 	right: 0;
 	background: rgba(170, 170, 170, 0.1);
+	.list-box {
+		height: 100%;
+		overflow-y: auto;
+	}
 	.song {
 		height: @h;
 		color: @c;
