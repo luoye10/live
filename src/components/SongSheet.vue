@@ -26,7 +26,8 @@ export default {
 		};
 	},
 	mounted() {
-		this.getSong();
+		// 这里不需要了，只有在点击查询列表详情时，才会需要调用getSong()方法
+		// this.getSong();
 	},
 	methods: {
 		getSong() {
