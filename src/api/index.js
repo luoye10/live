@@ -20,4 +20,7 @@ export default {
 	getMessage: songId => {
 		return axios.get('/song/url?id=' + songId);
 	},
+	getLyric: id => {
+		return axios.get('/lyric?id=' + id);
+	},
 };
