@@ -73,12 +73,10 @@ export default {
 		next() {},
 	},
 	watch: {
-		listMsg(newVal, oldVal) {
-			console.log(oldVal);
+		listMsg(newVal) {
 			this.play(newVal);
 		},
-		searchMsg(newVal, oldVal) {
-			console.log(oldVal);
+		searchMsg(newVal) {
 			this.play(newVal);
 		},
 	},
