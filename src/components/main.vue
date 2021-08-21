@@ -30,10 +30,11 @@
 				<Search v-if="isShow" :word="word" @songSearch="getSearch"></Search>
 				<!-- 歌单列表详情 -->
 				<SongSheet :id="songListId" v-if="!isShow" @songList="getList"></SongSheet>
+				<SongLyric :id="songId"></SongLyric>
 			</div>
 
 			<!-- 底部 -->
-			<Player :listMsg="listMsg" :songSearch="searchMsg"></Player>
+			<Player :songList="listMsg" :songSearch="searchMsg" @songLyric="getLyric"></Player>
 			<div class="footer">
 				<audio src="" class="audio-play"></audio>
 			</div>
@@ -44,12 +45,14 @@
 import api from '../api/index';
 import Search from './Search';
 import SongSheet from './SongSheet';
-import Player from './Player.vue';
+import Player from './Player';
+import SongLyric from './SongLyric';
 export default {
 	components: {
 		Search,
 		SongSheet,
 		Player,
+		SongLyric,
 	},
 	data() {
 		return {
@@ -60,7 +63,7 @@ export default {
 			isShow: false,
 			listMsg: '',
 			searchMsg: '',
-			// isOpen: true, 一直设置为true，不改变，那它就没必要
+			songId: '',
 		};
 	},
 	mounted() {
@@ -91,6 +94,9 @@ export default {
 		},
 		getSearch(para) {
 			this.searchMsg = para;
+		},
+		getLyric(para) {
+			this.songId = para;
 		},
 	},
 };
@@ -162,18 +168,21 @@ export default {
 	height: 100%;
 	position: relative;
 	.menu {
-		width: 30%;
+		width: 20%;
 		position: absolute;
 		left: 0;
 		top: 100px;
 		bottom: 60px;
-		overflow-y: auto;
 		.list {
 			height: 50px;
 			text-align: center;
 			line-height: 50px;
 			font-size: 20px;
 			cursor: pointer;
+			padding: 0 10px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
 		}
 		.active {
 			background: rgba(170, 170, 170, 0.5);

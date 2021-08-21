@@ -1,6 +1,6 @@
 <template>
 	<div class="play-box">
-		<span class="name">{{ this.name }}</span>
+		<span class="name" @click="lyric">{{ this.name }}</span>
 		<i class="el-icon-caret-left left" @click="prev"></i>
 		<div @click="button" class="btn">
 			<i :class="isPlay ? 'el-icon-video-pause' : 'el-icon-video-play'"></i>
@@ -18,7 +18,7 @@
 // import api from '../api/index'
 // import format from '../tool'
 export default {
-	props: ['listMsg', 'searchMsg'],
+	props: ['songList', 'songSearch'],
 	data() {
 		return {
 			isPlay: false,
@@ -28,6 +28,7 @@ export default {
 			audio: null,
 			timer: null,
 			name: '',
+			id: '',
 			progress: '',
 		};
 	},
@@ -44,7 +45,11 @@ export default {
 			}
 			this.isPlay = !this.isPlay;
 		},
+		lyric() {
+			this.$emit('songLyric', this.id);
+		},
 		play(para) {
+			this.id = para.id;
 			this.name = para.name;
 			if (typeof para.duration === 'string') {
 				this.allTime = para.duration;
@@ -73,10 +78,10 @@ export default {
 		next() {},
 	},
 	watch: {
-		listMsg(newVal) {
+		songList(newVal) {
 			this.play(newVal);
 		},
-		searchMsg(newVal) {
+		songSearch(newVal) {
 			this.play(newVal);
 		},
 	},
@@ -101,6 +106,7 @@ export default {
 		vertical-align: middle;
 		line-height: @h;
 		text-align: left;
+		cursor: pointer;
 	}
 	.left,
 	.btn,
@@ -126,7 +132,7 @@ export default {
 		background: rgba(170, 170, 170, 0.3);
 		border-radius: 10px;
 		vertical-align: middle;
-		overflow: hidden;
+		cursor: pointer;
 		.now {
 			width: 0;
 			height: 10px;
