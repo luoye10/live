@@ -16,8 +16,8 @@ export default {
 		};
 	},
 	methods: {
-		getLyric() {
-			api.getLyric(this.id)
+		getLyric(id) {
+			api.getLyric(id)
 				.then(res => {
 					this.items = res.data.lrc.lyric.split(/\[\d{2}:\d{2}.\d{2,}\]/g);
 					this.time = res.data.lrc.lyric.match(/\d{2}:\d{2}/g);
@@ -46,14 +46,11 @@ export default {
 </script>
 <style lang="less" scoped>
 .lyrics {
-	width: 800px;
-	height: 600px;
-	background: grey;
 	.lyric-list {
 		width: 400px;
 		height: 600px;
 		overflow-y: auto;
-		margin: 100px auto;
+		margin: 0 auto;
 		text-align: center;
 		.lyric {
 			margin: 10px auto;
@@ -71,6 +68,7 @@ export default {
 		background: rgba(172, 160, 160, 0.747);
 	}
 	.lyric-list::-webkit-scrollbar-thumb {
+		height: 10px;
 		border-radius: 10px;
 		background: rgba(116, 112, 93, 0.747);
 	}
