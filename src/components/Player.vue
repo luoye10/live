@@ -47,6 +47,7 @@ export default {
 		},
 		lyric() {
 			this.$emit('songLyric', this.id);
+			this.$emit('songComment', this.id);
 		},
 		play(para) {
 			this.id = para.id;

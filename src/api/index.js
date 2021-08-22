@@ -23,4 +23,7 @@ export default {
 	getLyric: id => {
 		return axios.get('/lyric?id=' + id);
 	},
+	getComment: id => {
+		return axios.get('/comment/music?id=' + id);
+	},
 };

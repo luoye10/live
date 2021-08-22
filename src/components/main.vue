@@ -32,9 +32,15 @@
 				<SongSheet :id="songListId" v-if="!isShow" @songList="getList"></SongSheet>
 			</div>
 			<SongLyric :id="songId"></SongLyric>
+			<SongComment :id="songId"></SongComment>
 
 			<!-- 底部 -->
-			<Player :songList="listMsg" :songSearch="searchMsg" @songLyric="getLyric"></Player>
+			<Player
+				:songList="listMsg"
+				:songSearch="searchMsg"
+				@songLyric="getLyric"
+				@songComment="getComment"
+			></Player>
 			<div class="footer">
 				<audio src="" class="audio-play"></audio>
 			</div>
@@ -47,12 +53,14 @@ import Search from './Search';
 import SongSheet from './SongSheet';
 import Player from './Player';
 import SongLyric from './SongLyric';
+import SongComment from './SongComment';
 export default {
 	components: {
 		Search,
 		SongSheet,
 		Player,
 		SongLyric,
+		SongComment,
 	},
 	data() {
 		return {
@@ -96,6 +104,9 @@ export default {
 			this.searchMsg = para;
 		},
 		getLyric(para) {
+			this.songId = para;
+		},
+		getComment(para) {
 			this.songId = para;
 		},
 	},
