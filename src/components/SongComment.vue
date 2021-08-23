@@ -25,9 +25,12 @@ export default {
 			items: [],
 		};
 	},
+	mounted() {
+		this.getComment();
+	},
 	methods: {
-		getComment(id) {
-			api.getComment(id)
+		getComment() {
+			api.getComment(this.id)
 				.then(res => {
 					console.log(res);
 					const list = res.data.comments;
@@ -64,11 +67,6 @@ export default {
 				format = format.replace(new RegExp(key), list[key]);
 			});
 			return format;
-		},
-	},
-	watch: {
-		id(newVal) {
-			this.getComment(newVal);
 		},
 	},
 };

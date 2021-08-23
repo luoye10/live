@@ -31,16 +31,13 @@
 				<!-- 歌单列表详情 -->
 				<SongSheet :id="songListId" v-if="!isShow" @songList="getList"></SongSheet>
 			</div>
-			<SongLyric :id="songId"></SongLyric>
-			<SongComment :id="songId"></SongComment>
+			<div class="container" v-if="isOpen">
+				<SongLyric :id="songId"></SongLyric>
+				<SongComment :id="songId"></SongComment>
+			</div>
 
 			<!-- 底部 -->
-			<Player
-				:songList="listMsg"
-				:songSearch="searchMsg"
-				@songLyric="getLyric"
-				@songComment="getComment"
-			></Player>
+			<Player :songList="listMsg" :songSearch="searchMsg" @songInfo="getInfo"></Player>
 			<div class="footer">
 				<audio src="" class="audio-play"></audio>
 			</div>
@@ -72,6 +69,7 @@ export default {
 			listMsg: '',
 			searchMsg: '',
 			songId: '',
+			isOpen: false,
 		};
 	},
 	mounted() {
@@ -97,17 +95,15 @@ export default {
 		query() {
 			this.isShow = true;
 		},
-		getList(para) {
-			this.listMsg = para;
+		getList(listText) {
+			this.listMsg = listText;
 		},
-		getSearch(para) {
-			this.searchMsg = para;
+		getSearch(searchText) {
+			this.searchMsg = searchText;
 		},
-		getLyric(para) {
-			this.songId = para;
-		},
-		getComment(para) {
-			this.songId = para;
+		getInfo(songId) {
+			this.songId = songId;
+			this.isOpen = true;
 		},
 	},
 };
@@ -199,5 +195,15 @@ export default {
 			background: rgba(170, 170, 170, 0.5);
 		}
 	}
+}
+.container {
+	position: absolute;
+	left: 0;
+	top: 100px;
+	right: 0;
+	bottom: 60px;
+	z-index: 10;
+	overflow-y: auto;
+	background: white;
 }
 </style>

@@ -46,8 +46,7 @@ export default {
 			this.isPlay = !this.isPlay;
 		},
 		lyric() {
-			this.$emit('songLyric', this.id);
-			this.$emit('songComment', this.id);
+			this.$emit('songInfo', this.id);
 		},
 		play(para) {
 			this.id = para.id;
