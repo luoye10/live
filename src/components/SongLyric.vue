@@ -1,45 +1,61 @@
 <template>
 	<div class="lyrics">
 		<ul class="lyric-list">
-			<li class="lyric" v-for="item in items" :key="item.message">{{ item }}</li>
+			<li
+				:class="['lyric', { active: index === activeLyric }]"
+				v-for="(item, index) in items"
+				:key="item.message"
+			>
+				{{ item }}
+			</li>
 		</ul>
 	</div>
 </template>
 <script>
 import api from '../api/index';
+import format from '../tool';
 export default {
 	props: ['id'],
 	data() {
 		return {
 			items: [],
 			time: [],
+			activeLyric: '',
 		};
 	},
+	mounted() {
+		this.getLyric();
+		this.getTime();
+	},
 	methods: {
-		getLyric(id) {
-			api.getLyric(id)
+		getLyric() {
+			api.getLyric(this.id)
 				.then(res => {
 					this.items = res.data.lrc.lyric.split(/\[\d{2}:\d{2}.\d{2,}\]/g);
 					this.time = res.data.lrc.lyric.match(/\d{2}:\d{2}/g);
-					console.log(this.items, this.time);
+					console.log(this.time);
 				})
 				.catch(function (error) {
 					console.log(error);
 				});
 		},
 		highLight(playTime) {
+			playTime = format(playTime * 1000);
 			for (var i = 0; i < this.time.length; i++) {
 				if (playTime >= this.time[i] && playTime < this.time[i + 1]) {
-					this.time[i].style.color = '';
-					this.time[i + 1].style.color = 'red';
-					this.time[i + 1].parentNode.scrollTop = i * 20;
+					this.activeLyric = i;
+					let lyric = document.querySelector('.lyric-list');
+					lyric.scrollTop = i * 20;
 				}
 			}
 		},
-	},
-	watch: {
-		id(newVal) {
-			this.getLyric(newVal);
+		getTime() {
+			let audio = document.querySelector('audio');
+			audio.addEventListener('timeupdate', this.timeupdate);
+		},
+		timeupdate(ev) {
+			const t = ev.target.currentTime;
+			this.highLight(t);
 		},
 	},
 };
@@ -48,7 +64,7 @@ export default {
 .lyrics {
 	.lyric-list {
 		width: 400px;
-		height: 600px;
+		height: 500px;
 		overflow-y: auto;
 		margin: 0 auto;
 		text-align: center;
@@ -57,6 +73,9 @@ export default {
 			height: 20px;
 			text-align: center;
 			color: rgba(122, 98, 98, 0.747);
+		}
+		.lyric.active {
+			color: red;
 		}
 	}
 	.lyric-list::-webkit-scrollbar {
