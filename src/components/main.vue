@@ -180,6 +180,10 @@ export default {
 		left: 0;
 		top: 100px;
 		bottom: 60px;
+		.song-sheet {
+			height: 100%;
+			overflow-y: auto;
+		}
 		.list {
 			height: 50px;
 			text-align: center;
