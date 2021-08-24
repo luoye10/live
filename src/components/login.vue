@@ -13,58 +13,55 @@
 		</div>
 	</div>
 </template>
-<script>
+<script setup>
 import api from '../api/index';
-export default {
-	data() {
-		return {
-			ruleForm: {
-				username: '',
-				password: '',
-			},
-			rules: {
-				username: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
-				password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
-			},
-		};
-	},
-	methods: {
-		login() {
-			this.$refs['loginForm'].validate(valid => {
-				if (!valid) {
-					console.log('rules验证没通过');
-					return;
-				}
-				// rules 通过了，可以正式开始调接口登录
-				// console.log('start login');
-				this.loginRequest();
-				// 调用登录接口，登录成功之后，开始跳转到别的组件
-			});
+import { reactive, getCurrentInstance } from '@vue/composition-api';
+const ins = getCurrentInstance();
+const ruleForm = reactive({
+	username: '',
+	password: '',
+});
+const rules = reactive({
+	username: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
+	password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
+});
+
+function login() {
+	this.$refs['loginForm'].validate(valid => {
+		if (!valid) {
+			console.log('rules验证没通过');
+			return;
+		}
+		// rules 通过了，可以正式开始调接口登录
+		// console.log('start login');
+		loginRequest();
+		// 调用登录接口，登录成功之后，开始跳转到别的组件
+	});
+}
+
+function loginRequest() {
+	api.login({
+		params: {
+			phone: ruleForm.username,
+			password: ruleForm.password,
 		},
-		loginRequest() {
-			api.login({
-				params: {
-					phone: this.ruleForm.username,
-					password: this.ruleForm.password,
-				},
-			})
-				.then(response => {
-					const data = response.data;
-					if (data.code !== 200) {
-						this.$message.error(data.msg || '账号或密码错误');
-						return;
-					}
-					var obj = JSON.stringify(data);
-					localStorage.setItem('userInfo', obj);
-					this.$message.success('登录成功');
-					this.$router.push({ name: 'main' });
-				})
-				.catch(function (error) {
-					console.log(error);
-				});
-		},
-	},
-};
+	})
+		.then(response => {
+			const data = response.data;
+			console.log(ins);
+			if (data.code !== 200) {
+				ins.$message.error(data.msg || '账号或密码错误');
+				return;
+			}
+			var obj = JSON.stringify(data);
+			localStorage.setItem('userInfo', obj);
+			ins.$message.success('登录成功');
+			ins.$router.push({ name: 'main' });
+		})
+		.catch(function (error) {
+			console.log(error);
+		});
+}
 </script>
 <style lang="less" scoped>
 .login {
