@@ -40,6 +40,7 @@ export default {
 					}
 					this.items = res.data.lrc.lyric.split(/\[\d{2}:\d{2}.\d{2,}\]/g);
 					this.time = res.data.lrc.lyric.match(/\d{2}:\d{2}/g);
+					console.log(this.items, this.time);
 				})
 				.catch(function (error) {
 					console.log(error);
@@ -49,9 +50,9 @@ export default {
 			playTime = format(playTime * 1000);
 			for (var i = 0; i < this.time.length; i++) {
 				if (playTime >= this.time[i] && playTime < this.time[i + 1]) {
-					this.activeLyric = i;
+					this.activeLyric = i + 1;
 					let lyric = document.querySelector('.lyric-list');
-					lyric.scrollTop = i * 20;
+					lyric.scrollTop = (i + 1) * 20;
 				}
 			}
 		},
@@ -73,8 +74,8 @@ export default {
 		padding: 20px 0;
 	}
 	.lyric-list {
-		width: 400px;
-		height: 500px;
+		width: 600px;
+		height: 400px;
 		overflow-y: auto;
 		margin: 0 auto;
 		text-align: center;

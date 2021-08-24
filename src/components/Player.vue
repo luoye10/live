@@ -1,6 +1,9 @@
 <template>
 	<div class="play-box">
-		<span class="name" @click="lyric">{{ this.name }}</span>
+		<div class="open">
+			<i class="el-icon-arrow-up show" @click="lyric"></i>
+			<span class="name">{{ this.name }}</span>
+		</div>
 		<i class="el-icon-caret-left left" @click="prev"></i>
 		<div @click="button" class="btn">
 			<i :class="isPlay ? 'el-icon-video-pause' : 'el-icon-video-play'"></i>
@@ -113,14 +116,24 @@ export default {
 	vertical-align: middle;
 	text-align: center;
 	line-height: @h;
-	.name {
+	.open {
 		display: inline-block;
 		width: 20%;
-		vertical-align: middle;
-		line-height: @h;
-		text-align: left;
-		cursor: pointer;
+		.show {
+			width: 10%;
+			text-align: left;
+			cursor: pointer;
+		}
+		.name {
+			display: inline-block;
+			width: 90%;
+			vertical-align: middle;
+			line-height: @h;
+			text-align: left;
+			cursor: pointer;
+		}
 	}
+
 	.left,
 	.btn,
 	.right {
