@@ -14,6 +14,14 @@
 				</div>
 			</li>
 		</ul>
+		<div class="page-box">
+			<el-pagination
+				layout="prev, pager, next"
+				@current-change="pageChange"
+				:total="total"
+				v-show="total > limit"
+			></el-pagination>
+		</div>
 	</div>
 </template>
 <script>
@@ -23,6 +31,9 @@ export default {
 	data() {
 		return {
 			items: [],
+			limit: 20,
+			page: 1,
+			total: 0,
 		};
 	},
 	mounted() {
@@ -30,8 +41,16 @@ export default {
 	},
 	methods: {
 		getComment() {
-			api.getComment(this.id)
+			const params = {
+				id: this.id,
+				limit: this.limit,
+				offset: (this.page - 1) * this.limit,
+			};
+			api.getComment(params)
 				.then(res => {
+					if (this.page === 1) {
+						this.total = res.data.total;
+					}
 					const list = res.data.comments;
 					const items = list.map(item => {
 						item.img = item.user.avatarUrl;
@@ -45,6 +64,10 @@ export default {
 				.catch(function (error) {
 					console.log(error);
 				});
+		},
+		pageChange(page) {
+			this.page = page;
+			this.getComment();
 		},
 		format(paraTime, format) {
 			let time = new Date(paraTime);
@@ -78,13 +101,16 @@ export default {
 		height: 100px;
 		border-radius: 5px;
 		margin: 20px;
-		background: rgba(177, 164, 164, 0.788);
-		cursor: pointer;
+		width: 75%;
+		margin: 0 auto;
+		// background: rgba(177, 164, 164, 0.788);
+		text-shadow: 0 0 10px rgba(51, 84, 100, 0.5);
 		position: relative;
 		.left {
 			display: inline-block;
 			width: 100px;
 			vertical-align: middle;
+			cursor: pointer;
 			.img {
 				width: 50px;
 				height: 50px;
@@ -102,6 +128,10 @@ export default {
 				margin-right: 5px;
 			}
 		}
+	}
+	.page-box {
+		margin: 15px 0;
+		text-align: center;
 	}
 }
 </style>
