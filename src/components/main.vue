@@ -32,6 +32,9 @@
 				<SongSheet :id="songListId" v-if="!isShow" @songList="getList"></SongSheet>
 			</div>
 			<div class="container" v-if="isOpen">
+				<div class="head-set">
+					<div class="hidden" @click="isOpen = false"><i class="el-icon-arrow-down"></i></div>
+				</div>
 				<SongLyric :id="songId"></SongLyric>
 				<SongComment :id="songId"></SongComment>
 			</div>
@@ -203,11 +206,22 @@ export default {
 .container {
 	position: absolute;
 	left: 0;
-	top: 100px;
+	top: 0;
 	right: 0;
 	bottom: 60px;
 	z-index: 10;
 	overflow-y: auto;
 	background: white;
+	.head-set {
+		height: 40px;
+		box-shadow: 0 0 15px 15px rgba(0, 0, 0, 0.2);
+	}
+	.hidden {
+		display: inline-block;
+		cursor: pointer;
+		font-size: 22px;
+		margin-left: 20px;
+		top: 15px;
+	}
 }
 </style>
