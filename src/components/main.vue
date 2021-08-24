@@ -212,9 +212,16 @@ export default {
 	z-index: 10;
 	overflow-y: auto;
 	background: white;
+	padding-top: 40px;
 	.head-set {
+		position: fixed;
+		left: 0;
+		right: 0;
+		top: 0;
 		height: 40px;
+		background: #fff;
 		box-shadow: 0 0 15px 15px rgba(0, 0, 0, 0.2);
+		z-index: 10;
 	}
 	.hidden {
 		display: inline-block;
