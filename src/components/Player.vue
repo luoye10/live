@@ -15,8 +15,7 @@
 	</div>
 </template>
 <script>
-// import api from '../api/index'
-// import format from '../tool'
+import getStyle from '../util/getStyle';
 export default {
 	props: ['songList', 'songSearch'],
 	data() {
@@ -35,6 +34,8 @@ export default {
 	mounted() {
 		this.audio = document.querySelectorAll('audio')[0];
 		this.progress = document.querySelectorAll('.progress')[0];
+		// 注：返回的width值是一个包含单位('px')的字符串，所以要把最后两个字符去掉，同时把值转化为数字
+		this.width = +getStyle(this.progress, 'width').slice(0, -2);
 	},
 	methods: {
 		button() {
@@ -73,7 +74,19 @@ export default {
 				this.isPlay = false;
 			}
 		},
-		get() {},
+		get(e) {
+			// 没有歌曲在播放的时候忽略点击操作
+			// if (!this.isPlay) {
+			// 	return;
+			// }
+			const x = e.offsetX;
+			const per = x / this.width;
+			const times = this.allTime.split(':'); // 此时的时间是一个时分格式的字符串，要转成纯数字的秒时间
+			const all = times[0] * 60 + times[1] * 1;
+			const currentTime = all * per;
+			this.changeW = per * 100 + '%';
+			this.audio.currentTime = currentTime;
+		},
 		prev() {},
 		next() {},
 	},
