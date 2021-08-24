@@ -32,7 +32,6 @@ export default {
 		getComment() {
 			api.getComment(this.id)
 				.then(res => {
-					console.log(res);
 					const list = res.data.comments;
 					const items = list.map(item => {
 						item.img = item.user.avatarUrl;

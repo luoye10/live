@@ -1,6 +1,7 @@
 <template>
 	<div class="lyrics">
-		<ul class="lyric-list">
+		<div class="no-lyric" v-if="nolyric">纯音乐，请欣赏</div>
+		<ul class="lyric-list" v-else>
 			<li
 				:class="['lyric', { active: index === activeLyric }]"
 				v-for="(item, index) in items"
@@ -21,6 +22,7 @@ export default {
 			items: [],
 			time: [],
 			activeLyric: '',
+			nolyric: false,
 		};
 	},
 	mounted() {
@@ -31,6 +33,11 @@ export default {
 		getLyric() {
 			api.getLyric(this.id)
 				.then(res => {
+					// 纯音乐没有歌词，或者有歌词但还没人上传
+					this.nolyric = res.data.nolyric;
+					if (res.data.nolyric) {
+						return;
+					}
 					this.items = res.data.lrc.lyric.split(/\[\d{2}:\d{2}.\d{2,}\]/g);
 					this.time = res.data.lrc.lyric.match(/\d{2}:\d{2}/g);
 				})
@@ -61,6 +68,10 @@ export default {
 </script>
 <style lang="less" scoped>
 .lyrics {
+	.no-lyric {
+		text-align: center;
+		padding: 20px 0;
+	}
 	.lyric-list {
 		width: 400px;
 		height: 500px;
