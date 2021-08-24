@@ -19,7 +19,7 @@
 </template>
 <script>
 import api from '../api/index';
-import format from '../tool';
+import format from '../util/format';
 export default {
 	props: ['id'],
 	data() {
@@ -38,12 +38,6 @@ export default {
 			this.loading = true;
 			api.getSong(this.id)
 				.then(response => {
-					// this.total = response.data.playlist.trackCount;
-					// 你知道这一步是在做什么吗？循环，你把每一个id都赋值给songId，后面的会覆盖前面的，最终就是把最后一个id赋值给this.songId,这有什么意义吗？
-					// this.idList.forEach(item => {
-					// 	this.songId = item.id;
-					// });
-
 					const trackIds = response.data.playlist.trackIds
 						.map(track => {
 							return track.id;
@@ -66,8 +60,6 @@ export default {
 					this.loading = false;
 				});
 		},
-		// 这里是获取歌曲详情，要先把歌单里每一首歌的名字查询出来之后进行点击才能明确查询哪一首歌
-		// 你直接在mounted里面进行调用，组件一开始渲染这里就会马上调用，此时的this.songId根本不存在，肯定不对
 		playSong(item) {
 			this.songId = item.id;
 			api.getMessage(item.id).then(response => {

@@ -13,7 +13,7 @@
 </template>
 <script>
 import api from '../api/index';
-import format from '../tool';
+import format from '../util/format';
 export default {
 	props: ['word'],
 	data() {

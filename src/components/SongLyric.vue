@@ -13,7 +13,7 @@
 </template>
 <script>
 import api from '../api/index';
-import format from '../tool';
+import format from '../util/format';
 export default {
 	props: ['id'],
 	data() {
@@ -33,7 +33,6 @@ export default {
 				.then(res => {
 					this.items = res.data.lrc.lyric.split(/\[\d{2}:\d{2}.\d{2,}\]/g);
 					this.time = res.data.lrc.lyric.match(/\d{2}:\d{2}/g);
-					console.log(this.time);
 				})
 				.catch(function (error) {
 					console.log(error);
