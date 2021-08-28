@@ -29,7 +29,7 @@
 				<!-- 搜索结果 -->
 				<Search v-if="isShow" :word="word" @songSearch="getSearch"></Search>
 				<!-- 歌单列表详情 -->
-				<SongSheet :id="songListId" v-if="!isShow" @songList="getList"></SongSheet>
+				<SongSheet :id="songListId" v-if="!isShow" @songList="getList" :index="index"></SongSheet>
 			</div>
 			<div class="container" v-if="isOpen">
 				<div class="head-set">
@@ -40,7 +40,7 @@
 			</div>
 
 			<!-- 底部 -->
-			<Player :songList="listMsg" :songSearch="searchMsg" @songInfo="getInfo"></Player>
+			<Player :songList="listMsg" :songSearch="searchMsg" @songInfo="getInfo" @playChange="playChange"></Player>
 			<div class="footer">
 				<audio src="" class="audio-play"></audio>
 			</div>
@@ -73,6 +73,7 @@ export default {
 			searchMsg: '',
 			songId: '',
 			isOpen: false,
+			index: 0, // 当前播放的音乐的下标
 		};
 	},
 	mounted() {
@@ -100,6 +101,7 @@ export default {
 		},
 		getList(listText) {
 			this.listMsg = listText;
+			this.index = listText.index; // 保存下标，切换上一首，下一首需要用到
 		},
 		getSearch(searchText) {
 			this.searchMsg = searchText;
@@ -108,6 +110,15 @@ export default {
 			this.songId = songId;
 			this.isOpen = true;
 		},
+		playChange(type) {
+			if (type === 'prev') {
+				// 上一首
+				this.index--
+			}else {
+				// 下一首
+				this.index++
+			}
+		}
 	},
 };
 </script>

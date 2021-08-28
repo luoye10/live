@@ -90,8 +90,12 @@ export default {
 			this.changeW = per * 100 + '%';
 			this.audio.currentTime = currentTime;
 		},
-		prev() {},
-		next() {},
+		prev() {
+			this.$emit('playChange', 'prev');
+		},
+		next() {
+			this.$emit('playChange', 'next');
+		},
 	},
 	watch: {
 		songList(newVal) {

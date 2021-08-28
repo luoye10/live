@@ -4,9 +4,9 @@
 			<ul class="song-list">
 				<li
 					:class="['song', { active: item.id === songId }]"
-					v-for="item in items"
+					v-for="(item, index) in items"
 					:key="item.message"
-					@click="playSong(item)"
+					@click="playSong(item, index)"
 				>
 					<span class="name item">{{ item.name }}</span>
 					<span class="singer item">{{ item.singer }}</span>
@@ -21,7 +21,7 @@
 import api from '../api/index';
 import format from '../util/format';
 export default {
-	props: ['id'],
+	props: ['id', 'index'],
 	data() {
 		return {
 			items: [],
@@ -52,6 +52,7 @@ export default {
 							return item;
 						});
 						this.items = items;
+						window.playList = items;
 						this.loading = false;
 					});
 				})
@@ -60,7 +61,7 @@ export default {
 					this.loading = false;
 				});
 		},
-		playSong(item) {
+		playSong(item, index) {
 			this.songId = item.id;
 			api.getMessage(item.id).then(response => {
 				const url = response.data.data[0].url;
@@ -69,8 +70,9 @@ export default {
 					return;
 				}
 				item.url = url;
-				let obj = item;
-				this.$emit('songList', obj);
+				// let obj = item;
+				item.index = index;
+				this.$emit('songList', item);
 			});
 		},
 	},
@@ -79,6 +81,17 @@ export default {
 			// oldVal 就是id原来的值，newVal就是id改变之后的新值
 			this.getSong(newVal);
 		},
+		index(newVal) {
+			// 下标可能小于0，或者大于数组长度
+			if (newVal < 0) {
+				newVal = this.items.length - 1 + newVal;
+			}
+			if (newVal > this.items.length - 1) {
+				newVal = newVal - this.items.length;
+			}
+			const item = this.items[newVal]
+			this.playSong(item, newVal);
+		}
 	},
 };
 </script>
