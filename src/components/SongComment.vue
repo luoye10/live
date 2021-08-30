@@ -99,11 +99,9 @@ export default {
 	.comment {
 		list-style: none;
 		height: 100px;
-		border-radius: 5px;
 		margin: 20px;
 		width: 75%;
 		margin: 0 auto;
-		// background: rgba(177, 164, 164, 0.788);
 		text-shadow: 0 0 10px rgba(51, 84, 100, 0.5);
 		position: relative;
 		.left {

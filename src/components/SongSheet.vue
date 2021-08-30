@@ -8,6 +8,7 @@
 					:key="item.message"
 					@click="playSong(item, index)"
 				>
+					<span class="num item">{{ index + 1 }}</span>
 					<span class="name item">{{ item.name }}</span>
 					<span class="singer item">{{ item.singer }}</span>
 					<span class="album item">{{ item.album }}</span>
@@ -29,16 +30,13 @@ export default {
 			songId: '',
 		};
 	},
-	mounted() {
-		// 这里不需要了，只有在点击查询列表详情时，才会需要调用getSong()方法
-		// this.getSong();
-	},
+	mounted() {},
 	methods: {
 		getSong() {
 			this.loading = true;
 			api.getSong(this.id)
-				.then(response => {
-					const trackIds = response.data.playlist.trackIds
+				.then(res => {
+					const trackIds = res.data.playlist.trackIds
 						.map(track => {
 							return track.id;
 						})
@@ -62,15 +60,17 @@ export default {
 				});
 		},
 		playSong(item, index) {
+			console.log(item);
+			const img = item.al.picUrl;
 			this.songId = item.id;
-			api.getMessage(item.id).then(response => {
-				const url = response.data.data[0].url;
+			api.getMessage(item.id).then(res => {
+				const url = res.data.data[0].url;
 				if (!url) {
 					this.$message.error('没有播放资源');
 					return;
 				}
+				item.img = img;
 				item.url = url;
-				// let obj = item;
 				item.index = index;
 				this.$emit('songList', item);
 			});
@@ -89,9 +89,9 @@ export default {
 			if (newVal > this.items.length - 1) {
 				newVal = newVal - this.items.length;
 			}
-			const item = this.items[newVal]
+			const item = this.items[newVal];
 			this.playSong(item, newVal);
-		}
+		},
 	},
 };
 </script>
@@ -126,6 +126,9 @@ export default {
 			vertical-align: middle;
 			padding-left: 10px;
 		}
+		.num {
+			width: 5%;
+		}
 		.name {
 			width: 30%;
 		}
@@ -133,7 +136,7 @@ export default {
 			width: 20%;
 		}
 		.album {
-			width: 40%;
+			width: 35%;
 		}
 		.time {
 			width: 10%;

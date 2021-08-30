@@ -73,8 +73,7 @@ export default {
 			const S = Number(String(this.allTime).slice(-2));
 			this.changeW = Math.floor((Math.floor(t) / (M + S)) * 100) + '%';
 			if (this.currentTime === this.allTime) {
-				this.audio.pause();
-				this.isPlay = false;
+				this.next();
 			}
 		},
 		get(e) {
