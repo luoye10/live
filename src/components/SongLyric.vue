@@ -1,5 +1,6 @@
 <template>
 	<div class="lyrics">
+		<div class="filter-layer" :style="{backgroundImage: 'url('+ img +')'}"></div>
 		<div class="no-lyric" v-if="nolyric">纯音乐，请欣赏</div>
 		<ul class="lyric-list" v-else>
 			<li
@@ -16,7 +17,7 @@
 import api from '../api/index';
 import format from '../util/format';
 export default {
-	props: ['id'],
+	props: ['id', 'img'],
 	data() {
 		return {
 			items: [],
@@ -76,16 +77,42 @@ export default {
 </script>
 <style lang="less" scoped>
 .lyrics {
-	margin: 10px 0;
+	margin: 10px auto;
+	position: relative;
+	width: 75%;
+	height: 400px;
+	.filter-layer{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		background-size: cover;
+		background-position: center center;
+		filter: blur(30px);
+	}
 	.no-lyric {
 		text-align: center;
-		padding: 20px 0;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 2;
+		line-height: 400px;
 	}
 	.lyric-list {
+		position: absolute;
+		left: 50%;
+		margin-left: -300px;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 2;
 		width: 600px;
 		height: 400px;
 		overflow-y: auto;
-		margin: 0 auto;
 		text-align: center;
 		.lyric {
 			// width: 100%;

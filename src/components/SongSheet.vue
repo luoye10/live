@@ -63,13 +63,13 @@ export default {
 			console.log(item);
 			const img = item.al.picUrl;
 			this.songId = item.id;
+			item.img = img;
 			api.getMessage(item.id).then(res => {
 				const url = res.data.data[0].url;
 				if (!url) {
 					this.$message.error('没有播放资源');
 					return;
 				}
-				item.img = img;
 				item.url = url;
 				item.index = index;
 				this.$emit('songList', item);

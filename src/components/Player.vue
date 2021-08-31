@@ -50,11 +50,12 @@ export default {
 			this.isPlay = !this.isPlay;
 		},
 		lyric() {
-			this.$emit('songInfo', this.id);
+			this.$emit('songInfo', {songId: this.id, img: this.img});
 		},
 		play(para) {
 			this.id = para.id;
 			this.name = para.name;
+			this.img = para.img;
 			if (typeof para.duration === 'string') {
 				this.allTime = para.duration;
 			} else {

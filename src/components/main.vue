@@ -35,7 +35,7 @@
 				<div class="head-set">
 					<div class="hidden" @click="isOpen = false"><i class="el-icon-arrow-down"></i></div>
 				</div>
-				<SongLyric :id="songId"></SongLyric>
+				<SongLyric :id="songId" :img="songImg"></SongLyric>
 				<SongComment :id="songId"></SongComment>
 			</div>
 
@@ -72,6 +72,7 @@ export default {
 			listMsg: '',
 			searchMsg: '',
 			songId: '',
+			songImg: '',
 			isOpen: false,
 			index: 0, // 当前播放的音乐的下标
 		};
@@ -106,8 +107,9 @@ export default {
 		getSearch(searchText) {
 			this.searchMsg = searchText;
 		},
-		getInfo(songId) {
-			this.songId = songId;
+		getInfo(param) {
+			this.songId = param.songId;
+			this.songImg = param.img;
 			this.isOpen = true;
 		},
 		playChange(type) {
