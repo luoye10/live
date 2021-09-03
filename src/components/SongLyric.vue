@@ -1,7 +1,7 @@
 <template>
 	<div class="lyrics">
-		<div class="filter-layer" :style="{backgroundImage: 'url('+ img +')'}"></div>
-		<div class="no-lyric" v-if="nolyric">纯音乐，请欣赏</div>
+		<div class="filter-layer" :style="{ backgroundImage: 'url(' + img + ')' }"></div>
+		<div class="no-lyric" v-if="nolyric">还没有歌词哦~</div>
 		<ul class="lyric-list" v-else>
 			<li
 				:class="['lyric', { active: index === activeLyric }]"
@@ -23,7 +23,7 @@ export default {
 			items: [],
 			time: [],
 			activeLyric: '',
-			nolyric: false,
+			nolyric: true,
 		};
 	},
 	mounted() {
@@ -81,16 +81,18 @@ export default {
 	position: relative;
 	width: 75%;
 	height: 400px;
-	.filter-layer{
+	.filter-layer {
 		position: absolute;
 		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 20%;
+		height: 60%;
+		border-radius: 50%;
 		z-index: 1;
 		background-size: cover;
 		background-position: center center;
-		filter: blur(30px);
+		// filter: blur(0);
 	}
 	.no-lyric {
 		text-align: center;
