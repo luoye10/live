@@ -8,7 +8,7 @@
 					:key="item.message"
 					@click="playSong(item, index)"
 				>
-					<span class="num item">{{ index + 1 }}</span>
+					<span class="num item">{{ index >= 9 ? index + 1 : '0' + (index + 1) }}</span>
 					<span class="name item">{{ item.name }}</span>
 					<span class="singer item">{{ item.singer }}</span>
 					<span class="album item">{{ item.album }}</span>
