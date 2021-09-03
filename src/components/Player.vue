@@ -50,7 +50,7 @@ export default {
 			this.isPlay = !this.isPlay;
 		},
 		lyric() {
-			this.$emit('songInfo', {songId: this.id, img: this.img});
+			this.$emit('songInfo', { songId: this.id, img: this.img });
 		},
 		play(para) {
 			this.id = para.id;
