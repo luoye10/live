@@ -85,8 +85,12 @@ export default {
 			var obj = JSON.parse(localStorage.getItem('userInfo'));
 			var id = obj.account.id;
 			api.getSongList(id)
-				.then(response => {
-					this.itemList = response.data.playlist;
+				.then(res => {
+					console.log(res);
+					this.itemList = res.data.playlist;
+					for (var i = 0; i < this.itemList.length; i++) {
+						this.itemList[0].name = '我喜欢的音乐';
+					}
 				})
 				.catch(error => {
 					console.log(error);
@@ -115,12 +119,12 @@ export default {
 		playChange(type) {
 			if (type === 'prev') {
 				// 上一首
-				this.index--
-			}else {
+				this.index--;
+			} else {
 				// 下一首
-				this.index++
+				this.index++;
 			}
-		}
+		},
 	},
 };
 </script>
