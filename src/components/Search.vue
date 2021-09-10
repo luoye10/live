@@ -63,11 +63,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .reveal {
-	position: absolute;
-	left: 20%;
-	top: 100px;
-	right: 0;
-	bottom: 60px;
+	height: 100%;
 	.song-list {
 		height: 100%;
 		overflow-y: auto;
