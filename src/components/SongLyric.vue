@@ -1,6 +1,6 @@
 <template>
 	<div class="lyrics">
-		<div class="filter-layer" :style="{ backgroundImage: 'url(' + img + ')' }"></div>
+		<div class="filter-layer play" :style="{ backgroundImage: 'url(' + img + ')' }"></div>
 		<div class="no-lyric" v-if="nolyric">还没有歌词哦~</div>
 		<ul class="lyric-list" v-else>
 			<li
@@ -84,15 +84,19 @@ export default {
 	.filter-layer {
 		position: absolute;
 		left: 0;
-		top: 50%;
-		transform: translateY(-50%);
-		width: 20%;
-		height: 60%;
+		top: 100px;
+		// transform: translateY(-50%);
+		width: 200px;
+		height: 200px;
 		border-radius: 50%;
 		z-index: 1;
 		background-size: cover;
 		background-position: center center;
+		transform-origin: center;
 		// filter: blur(0);
+		&.play{
+			animation: play 20s linear infinite;
+		}
 	}
 	.no-lyric {
 		text-align: center;
@@ -140,6 +144,14 @@ export default {
 		height: 10px;
 		border-radius: 10px;
 		background: rgba(116, 112, 93, 0.747);
+	}
+}
+@keyframes play {
+	0%{
+		transform: rotate(0deg);
+	}
+	100%{
+		transform: rotate(360deg);
 	}
 }
 </style>

@@ -99,11 +99,8 @@ export default {
 @h: 50px;
 @c: #000;
 .songs {
-	position: absolute;
-	top: 100px;
-	bottom: 60px;
-	left: 20%;
-	right: 0;
+	height: 100%;
+	position: relative;
 	background: rgba(170, 170, 170, 0.1);
 	.list-box {
 		height: 100%;

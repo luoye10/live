@@ -26,10 +26,12 @@
 						</li>
 					</ul>
 				</div>
-				<!-- 搜索结果 -->
-				<Search v-if="isShow" :word="word" @songSearch="getSearch"></Search>
-				<!-- 歌单列表详情 -->
-				<SongSheet :id="songListId" v-if="!isShow" @songList="getList" :index="index"></SongSheet>
+				<div class="song-list">
+					<!-- 搜索结果 -->
+					<Search v-if="isShow" :word="word" @songSearch="getSearch"></Search>
+					<!-- 歌单列表详情 -->
+					<SongSheet :id="songListId" v-if="!isShow" @songList="getList" :index="index"></SongSheet>
+				</div>
 			</div>
 			<div class="container" v-if="isOpen">
 				<div class="head-set">
@@ -128,7 +130,9 @@ export default {
 	},
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
+@h: 80px;
+@bottom: 60px;
 .main {
 	width: 100%;
 	height: 100%;
@@ -137,21 +141,23 @@ export default {
 	.layout {
 		width: 100%;
 		height: 100%;
+		position: relative;
 	}
 }
 .head {
-	height: 100px;
+	height: @h;
 	vertical-align: middle;
 	position: fixed;
 	left: 0;
 	top: 0;
 	right: 0;
 	z-index: 1;
-	background: rgba(170, 170, 170);
+	background-color: rgba(255, 255, 255, 0.4);
+	box-shadow: 0 0 15px rgba(102, 204, 255, 0.3);
 	.logo {
 		display: inline-block;
 		vertical-align: middle;
-		line-height: 100px;
+		line-height: @h;
 		.mark {
 			margin: 0 30px;
 			vertical-align: middle;
@@ -174,9 +180,11 @@ export default {
 			display: inline-block;
 			width: 200px;
 			height: 30px;
-			border-radius: 5px;
 			outline: none;
 			vertical-align: middle;
+			padding: 0 10px;
+			border-radius: 5px;
+			border: 1px solid #6cf;
 		}
 		.btn {
 			display: inline-block;
@@ -192,14 +200,17 @@ export default {
 	}
 }
 .inner {
-	height: 100%;
-	position: relative;
+	position: absolute;
+	top: @h;
+	left: 0;
+	right: 0;
+	bottom: 0;
 	.menu {
 		width: 20%;
 		position: absolute;
 		left: 0;
-		top: 100px;
-		bottom: 60px;
+		top: 0;
+		bottom: @bottom;
 		.song-sheet {
 			height: 100%;
 			overflow-y: auto;
@@ -218,6 +229,13 @@ export default {
 		.active {
 			background: rgba(170, 170, 170, 0.5);
 		}
+	}
+	.song-list {
+		width: 80%;
+		position: absolute;
+		left: 20%;
+		top: 0;
+		bottom: @bottom;
 	}
 }
 .container {

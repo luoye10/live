@@ -4,17 +4,28 @@
 			<i class="el-icon-arrow-up show" @click="lyric"></i>
 			<span class="name">{{ this.name }}</span>
 		</div>
-		<i class="el-icon-caret-left left" @click="prev"></i>
-		<div @click="button" class="btn">
-			<i :class="isPlay ? 'el-icon-video-pause' : 'el-icon-video-play'"></i>
+		<div class="operation">
+			<i class="el-icon-caret-left left" @click="prev"></i>
+			<div @click="button" class="btn">
+				<i :class="isPlay ? 'el-icon-video-pause' : 'el-icon-video-play'"></i>
+			</div>
+			<i class="el-icon-caret-right right" @click="next"></i>
 		</div>
-		<i class="el-icon-caret-right right" @click="next"></i>
-		<div class="nowTime">{{ this.currentTime }}</div>
-		<div class="progress" @click="get">
-			<div class="now" :style="{ width: changeW }"></div>
+		<div class="time-pro-vol">
+			<div class="time-pro">
+				<div class="nowTime">{{ this.currentTime }}</div>
+				<div class="progress" @click="get" ref="progress">
+					<div class="now" :style="{ width: changeW }"></div>
+				</div>
+				<div class="end">{{ this.allTime }}</div>
+			</div>
+			<div class="list">
+				<div class="vol-box">
+					<el-slider v-model="volum" @change="getVolum"></el-slider>
+				</div>
+			</div>
 		</div>
-		<div class="end">{{ this.allTime }}</div>
-		<audio src="" @timeupdate="timeupdate"></audio>
+		<audio src="" @timeupdate="timeupdate" ref="audio"></audio>
 	</div>
 </template>
 <script>
@@ -32,11 +43,12 @@ export default {
 			name: '',
 			id: '',
 			progress: '',
+			volum: 100,
 		};
 	},
 	mounted() {
-		this.audio = document.querySelectorAll('audio')[0];
-		this.progress = document.querySelectorAll('.progress')[0];
+		this.audio = this.$refs.audio;
+		this.progress = this.$refs.progress;
 		// 注：返回的width值是一个包含单位('px')的字符串，所以要把最后两个字符去掉，同时把值转化为数字
 		this.width = +getStyle(this.progress, 'width').slice(0, -2);
 	},
@@ -96,6 +108,9 @@ export default {
 		next() {
 			this.$emit('playChange', 'next');
 		},
+		getVolum(v) {
+			this.audio.volume = v / 100;
+		},
 	},
 	watch: {
 		songList(newVal) {
@@ -112,32 +127,42 @@ export default {
 .play-box {
 	width: 100%;
 	height: @h;
-	border-top: 1px solid #aaa;
 	position: fixed;
 	bottom: 0;
 	left: 0;
-	background: #fff;
+	background: rgba(255, 255, 255, 0.4);
 	vertical-align: middle;
 	text-align: center;
 	line-height: @h;
+	display: flex;
+	box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
 	.open {
-		display: inline-block;
-		width: 20%;
+		flex: 2;
 		.show {
-			width: 10%;
-			text-align: left;
+			width: 20%;
+			padding-left: 20px;
+			box-sizing: border-box;
 			cursor: pointer;
 		}
 		.name {
 			display: inline-block;
-			width: 90%;
+			width: 80%;
 			vertical-align: middle;
 			line-height: @h;
 			text-align: left;
 			cursor: pointer;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space: nowrap;
 		}
 	}
-
+	.operation {
+		flex: 1.5;
+	}
+	.time-pro-vol {
+		flex: 6.5;
+		display: flex;
+	}
 	.left,
 	.btn,
 	.right {
@@ -147,34 +172,37 @@ export default {
 		margin: 0 10px;
 		vertical-align: middle;
 	}
-	.nowTime {
-		display: inline-block;
-		width: 10%;
-		height: 20px;
-		margin: 0 10px;
-		vertical-align: middle;
-		line-height: 20px;
-	}
-	.progress {
-		display: inline-block;
-		width: 40%;
-		height: 10px;
-		background: rgba(170, 170, 170, 0.3);
-		border-radius: 10px;
-		vertical-align: middle;
-		cursor: pointer;
-		.now {
-			width: 0;
+	.time-pro {
+		flex: 8;
+		display: flex;
+		align-items: center;
+		.nowTime,
+		.end {
+			width: 70px;
+		}
+		.progress {
+			flex: 1;
 			height: 10px;
-			cursor: pointer;
+			background: rgba(170, 170, 170, 0.3);
 			border-radius: 10px;
-			background: rgba(209, 44, 22, 0.5);
+			vertical-align: middle;
+			cursor: pointer;
+			.now {
+				width: 0;
+				height: 10px;
+				cursor: pointer;
+				border-radius: 10px;
+				background: rgba(209, 44, 22, 0.5);
+			}
 		}
 	}
-	.end {
-		display: inline-block;
-		width: 10%;
-		height: 20px;
+	.list {
+		flex: 2;
+		display: flex;
+		align-items: center;
+		.vol-box {
+			width: 40%;
+		}
 	}
 }
 </style>
