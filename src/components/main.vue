@@ -11,6 +11,19 @@
 					<input type="text" class="words" v-model="word" />
 					<div class="btn" @click="query">搜索</div>
 				</div>
+				<div class="user-info">
+					<div class="avatar">
+						<el-avatar v-if="user" :size="'medium'" :src="user.profile.avatarUrl"></el-avatar>
+					</div>
+					<el-dropdown @command="signOut">
+						<span class="el-dropdown-link">
+							{{ user && user.profile.nickname }}<i class="el-icon-arrow-down el-icon--right"></i>
+						</span>
+						<el-dropdown-menu slot="dropdown">
+							<el-dropdown-item command="signOut">退出</el-dropdown-item>
+						</el-dropdown-menu>
+					</el-dropdown>
+				</div>
 			</div>
 			<div class="inner">
 				<!-- 左侧菜单 -->
@@ -77,10 +90,12 @@ export default {
 			songImg: '',
 			isOpen: false,
 			index: 0, // 当前播放的音乐的下标
+			user: null,
 		};
 	},
 	mounted() {
 		this.songListRequest();
+		this.user = JSON.parse(localStorage.getItem('userInfo'));
 	},
 	methods: {
 		songListRequest() {
@@ -126,6 +141,10 @@ export default {
 				// 下一首
 				this.index++;
 			}
+		},
+		signOut(cmd) {
+			this.$message.success('退出登录');
+			cmd === 'signOut' && this.$router.push({ name: 'login' });
 		},
 	},
 };
@@ -196,6 +215,24 @@ export default {
 			vertical-align: middle;
 			margin-left: 20px;
 			cursor: pointer;
+		}
+	}
+	.user-info {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		right: 80px;
+		cursor: pointer;
+		line-height: 80px;
+		height: 80px;
+		display: flex;
+		.avatar {
+			display: flex;
+			align-items: center;
+			margin-right: 20px;
+		}
+		.el-dropdown {
+			font-size: 20px;
 		}
 	}
 }
