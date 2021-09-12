@@ -31,4 +31,12 @@ export default {
 			.join('&');
 		return axios.get('/comment/music?' + data);
 	},
+	getPlayRecord: params => {
+		const data = Object.keys(params)
+			.map(key => {
+				return key + '=' + params[key];
+			})
+			.join('&');
+		return axios.get('/user/record?' + data);
+	},
 };

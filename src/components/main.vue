@@ -12,7 +12,7 @@
 					<div class="btn" @click="query">搜索</div>
 				</div>
 				<div class="user-info">
-					<div class="avatar">
+					<div class="avatar" @click="getPlayRecord">
 						<el-avatar v-if="user" :size="'medium'" :src="user.profile.avatarUrl"></el-avatar>
 					</div>
 					<el-dropdown @command="signOut">
@@ -145,6 +145,15 @@ export default {
 		signOut(cmd) {
 			this.$message.success('退出登录');
 			cmd === 'signOut' && this.$router.push({ name: 'login' });
+		},
+		getPlayRecord() {
+			const params = {
+				uid: this.user.profile.userId,
+				type: 0,
+			};
+			api.getPlayRecord(params).then(res => {
+				console.log(res);
+			});
 		},
 	},
 };
