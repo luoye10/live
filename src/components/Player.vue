@@ -23,6 +23,15 @@
 				<div class="vol-box">
 					<el-slider v-model="volum" @change="getVolum"></el-slider>
 				</div>
+				<div class="model">
+					<el-dropdown>
+						<el-button type="primary">播放模式<i class="el-icon-arrow-down el-icon--right"></i> </el-button>
+						<el-dropdown-menu slot="dropdown">
+							<el-dropdown-item @click="plain">顺序播放</el-dropdown-item>
+							<el-dropdown-item @click="random">随机播放</el-dropdown-item>
+						</el-dropdown-menu>
+					</el-dropdown>
+				</div>
 			</div>
 		</div>
 		<audio src="" @timeupdate="timeupdate" ref="audio"></audio>
@@ -111,6 +120,8 @@ export default {
 		getVolum(v) {
 			this.audio.volume = v / 100;
 		},
+		plain() {},
+		random() {},
 	},
 	watch: {
 		songList(newVal) {
@@ -157,51 +168,54 @@ export default {
 		}
 	}
 	.operation {
-		flex: 1.5;
+		flex: 1;
+		.left,
+		.btn,
+		.right {
+			display: inline-block;
+			font-size: 25px;
+			cursor: pointer;
+			margin: 0 10px;
+			vertical-align: middle;
+		}
 	}
 	.time-pro-vol {
-		flex: 6.5;
+		flex: 7;
 		display: flex;
-	}
-	.left,
-	.btn,
-	.right {
-		display: inline-block;
-		font-size: 25px;
-		cursor: pointer;
-		margin: 0 10px;
-		vertical-align: middle;
-	}
-	.time-pro {
-		flex: 8;
-		display: flex;
-		align-items: center;
-		.nowTime,
-		.end {
-			width: 70px;
-		}
-		.progress {
-			flex: 1;
-			height: 10px;
-			background: rgba(170, 170, 170, 0.3);
-			border-radius: 10px;
-			vertical-align: middle;
-			cursor: pointer;
-			.now {
-				width: 0;
+		.time-pro {
+			flex: 7;
+			display: flex;
+			align-items: center;
+			.nowTime,
+			.end {
+				width: 70px;
+			}
+			.progress {
+				flex: 1;
 				height: 10px;
-				cursor: pointer;
+				background: rgba(170, 170, 170, 0.3);
 				border-radius: 10px;
-				background: rgba(209, 44, 22, 0.5);
+				vertical-align: middle;
+				cursor: pointer;
+				.now {
+					width: 0;
+					height: 10px;
+					cursor: pointer;
+					border-radius: 10px;
+					background: rgba(209, 44, 22, 0.5);
+				}
 			}
 		}
-	}
-	.list {
-		flex: 2;
-		display: flex;
-		align-items: center;
-		.vol-box {
-			width: 40%;
+		.list {
+			flex: 3;
+			display: flex;
+			align-items: center;
+			.vol-box {
+				flex: 4;
+			}
+			.model {
+				flex: 6;
+			}
 		}
 	}
 }
