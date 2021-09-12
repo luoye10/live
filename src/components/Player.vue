@@ -24,13 +24,12 @@
 					<el-slider v-model="volum" @change="getVolum"></el-slider>
 				</div>
 				<div class="model">
-					<el-dropdown>
-						<el-button type="primary">播放模式<i class="el-icon-arrow-down el-icon--right"></i> </el-button>
-						<el-dropdown-menu slot="dropdown">
-							<el-dropdown-item @click="plain">顺序播放</el-dropdown-item>
-							<el-dropdown-item @click="random">随机播放</el-dropdown-item>
-						</el-dropdown-menu>
-					</el-dropdown>
+					<div class="model-box">
+						<el-select v-model="playModel" placeholder="请选择播放模式" @change="changeModel">
+							<el-option v-for="item in modelList" :key="item.type" :label="item.text" :value="item.type">
+							</el-option>
+						</el-select>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -53,6 +52,11 @@ export default {
 			id: '',
 			progress: '',
 			volum: 100,
+			modelList: [
+				{ type: 'plain', text: '顺序模式' },
+				{ type: 'random', text: '随机模式' },
+			],
+			playModel: 'plain',
 		};
 	},
 	mounted() {
@@ -120,8 +124,9 @@ export default {
 		getVolum(v) {
 			this.audio.volume = v / 100;
 		},
-		plain() {},
-		random() {},
+		changeModel(type) {
+			window.playModel = type;
+		},
 	},
 	watch: {
 		songList(newVal) {
@@ -216,6 +221,10 @@ export default {
 			.model {
 				flex: 6;
 			}
+		}
+		.model-box {
+			width: 60%;
+			margin: 0 auto;
 		}
 	}
 }

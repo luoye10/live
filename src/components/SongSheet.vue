@@ -21,6 +21,7 @@
 <script>
 import api from '../api/index';
 import format from '../util/format';
+import ran from '../util/getRandom';
 export default {
 	props: ['id', 'index'],
 	data() {
@@ -60,7 +61,6 @@ export default {
 				});
 		},
 		playSong(item, index) {
-			console.log(item);
 			const img = item.al.picUrl;
 			this.songId = item.id;
 			item.img = img;
@@ -82,12 +82,18 @@ export default {
 			this.getSong(newVal);
 		},
 		index(newVal) {
-			// 下标可能小于0，或者大于数组长度
-			if (newVal < 0) {
-				newVal = this.items.length - 1 + newVal;
-			}
-			if (newVal > this.items.length - 1) {
-				newVal = newVal - this.items.length;
+			const type = this.playModel;
+			if (type === 'random') {
+				// 随机模式，在这里处理逻辑
+				newVal = ran(this.items.length - 1, 0, true);
+			} else {
+				// 下标可能小于0，或者大于数组长度
+				if (newVal < 0) {
+					newVal = this.items.length - 1 + newVal;
+				}
+				if (newVal > this.items.length - 1) {
+					newVal = newVal - this.items.length;
+				}
 			}
 			const item = this.items[newVal];
 			this.playSong(item, newVal);
