@@ -14,6 +14,9 @@
 				<div class="user-info">
 					<div class="avatar" @click="getPlayRecord">
 						<el-avatar v-if="user" :size="'medium'" :src="user.profile.avatarUrl"></el-avatar>
+						<div class="playRecord" ref="playRecord" v-if="show">
+							<div class="content"></div>
+						</div>
 					</div>
 					<el-dropdown @command="signOut">
 						<span class="el-dropdown-link">
@@ -69,6 +72,7 @@ import SongSheet from './SongSheet';
 import Player from './Player';
 import SongLyric from './SongLyric';
 import SongComment from './SongComment';
+import * as echarts from 'echarts';
 export default {
 	components: {
 		Search,
@@ -91,6 +95,7 @@ export default {
 			isOpen: false,
 			index: 0, // 当前播放的音乐的下标
 			user: null,
+			show: false,
 		};
 	},
 	mounted() {
@@ -103,7 +108,6 @@ export default {
 			var id = obj.account.id;
 			api.getSongList(id)
 				.then(res => {
-					console.log(res);
 					this.itemList = res.data.playlist;
 					for (var i = 0; i < this.itemList.length; i++) {
 						this.itemList[0].name = '我喜欢的音乐';
@@ -117,6 +121,7 @@ export default {
 		songDetail(list) {
 			this.songListId = list.id; // 这里修改了songListId的值，同过id属性传递给songsheet的值也会发生变化，就会触发里面的watch
 			this.isShow = false;
+			this.show = false;
 		},
 		query() {
 			this.isShow = true;
@@ -151,9 +156,63 @@ export default {
 				uid: this.user.profile.userId,
 				type: 0,
 			};
-			api.getPlayRecord(params).then(res => {
-				console.log(res);
-			});
+			this.show = true;
+			this.isShow = true;
+			api.getPlayRecord(params)
+				.then(res => {
+					let name = [],
+						num = [];
+					const list = res.data.allData;
+					list.forEach(item => {
+						name.push(item.song.name);
+						num.push(item.score);
+					});
+					let myChart = echarts.init(document.querySelector('.content'));
+					let option = {
+						tooltip: {},
+						legend: {
+							data: ['播放记录'],
+						},
+						xAxis: {
+							data: name,
+							axisLabel: {
+								show: true,
+								textStyle: {
+									color: 'aqua',
+									fontFamily: 'my',
+								},
+							},
+						},
+						yAxis: {},
+						series: [
+							{
+								name: '播放记录',
+								type: 'bar',
+								data: num,
+								showBackground: true,
+								itemStyle: {
+									color: 'aqua',
+								},
+							},
+						],
+						dataZoom: [
+							{
+								show: true,
+								start: 95,
+								end: 100,
+							},
+							{
+								type: 'inside',
+								start: 94,
+								end: 100,
+							},
+						],
+					};
+					myChart.setOption(option);
+				})
+				.catch(error => {
+					console.log(error);
+				});
 		},
 	},
 };
@@ -240,6 +299,17 @@ export default {
 			align-items: center;
 			margin-right: 20px;
 		}
+		.playRecord {
+			position: fixed;
+			left: 20%;
+			top: @h;
+			right: 0;
+			bottom: @bottom;
+			z-index: 10;
+			.content {
+				height: 100%;
+			}
+		}
 		.el-dropdown {
 			font-size: 20px;
 		}
@@ -272,8 +342,8 @@ export default {
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
-		.active {
-			background: rgba(170, 170, 170, 0.5);
+		.list.active {
+			background: rgba(26, 105, 179, 0.5);
 		}
 	}
 	.song-list {

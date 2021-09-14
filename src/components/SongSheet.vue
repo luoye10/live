@@ -82,7 +82,7 @@ export default {
 			this.getSong(newVal);
 		},
 		index(newVal) {
-			const type = this.playModel;
+			const type = window.playModel;
 			if (type === 'random') {
 				// 随机模式，在这里处理逻辑
 				newVal = ran(this.items.length - 1, 0, true);

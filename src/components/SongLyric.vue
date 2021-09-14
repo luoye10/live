@@ -39,7 +39,6 @@ export default {
 					if (res.data.nolyric) {
 						return;
 					}
-					console.log(res);
 					this.items = res.data.lrc.lyric.split(/\[\d{2}:\d{2}.\d{2,}\]|\[\d{2}:\d{2}\]/g);
 					this.time = res.data.lrc.lyric.match(/\d{2}:\d{2}/g);
 				})
@@ -85,7 +84,6 @@ export default {
 		position: absolute;
 		left: 0;
 		top: 100px;
-		// transform: translateY(-50%);
 		width: 200px;
 		height: 200px;
 		border-radius: 50%;
@@ -93,8 +91,7 @@ export default {
 		background-size: cover;
 		background-position: center center;
 		transform-origin: center;
-		// filter: blur(0);
-		&.play{
+		&.play {
 			animation: play 20s linear infinite;
 		}
 	}
@@ -147,10 +144,10 @@ export default {
 	}
 }
 @keyframes play {
-	0%{
+	0% {
 		transform: rotate(0deg);
 	}
-	100%{
+	100% {
 		transform: rotate(360deg);
 	}
 }

@@ -1,7 +1,10 @@
 <template>
 	<div class="play-box">
-		<div class="open">
-			<i class="el-icon-arrow-up show" @click="lyric"></i>
+		<div class="open" @click="lyric">
+			<span class="show" v-if="show">
+				<i class="el-icon-arrow-up icon"></i>
+				<img :src="img" class="img" />
+			</span>
 			<span class="name">{{ this.name }}</span>
 		</div>
 		<div class="operation">
@@ -50,6 +53,8 @@ export default {
 			timer: null,
 			name: '',
 			id: '',
+			img: '',
+			show: false,
 			progress: '',
 			volum: 100,
 			modelList: [
@@ -78,6 +83,7 @@ export default {
 			this.$emit('songInfo', { songId: this.id, img: this.img });
 		},
 		play(para) {
+			this.show = true;
 			this.id = para.id;
 			this.name = para.name;
 			this.img = para.img;
@@ -154,18 +160,36 @@ export default {
 	box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
 	.open {
 		flex: 2;
+		cursor: pointer;
+		display: flex;
 		.show {
-			width: 20%;
-			padding-left: 20px;
+			width: 60px;
 			box-sizing: border-box;
-			cursor: pointer;
+			position: relative;
+			vertical-align: middle;
+			line-height: @h;
+			.icon {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+				color: aqua;
+			}
+			.img {
+				width: 30px;
+				height: 40px;
+				margin: 10px;
+				&hover {
+					filter: blur(10px);
+				}
+			}
 		}
 		.name {
-			display: inline-block;
-			width: 80%;
+			flex: 1;
 			vertical-align: middle;
 			line-height: @h;
 			text-align: left;
+			padding-left: 20px;
 			cursor: pointer;
 			text-overflow: ellipsis;
 			overflow: hidden;
