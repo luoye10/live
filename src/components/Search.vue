@@ -1,5 +1,5 @@
 <template>
-	<div class="reveal">
+	<div class="reveal" v-lodaing="loading">
 		<ul class="song-list">
 			<li class="song" v-for="item in items" :key="item.message" @click="button(item)">
 				<img :src="item.img" class="img" />
@@ -19,6 +19,7 @@ export default {
 	data() {
 		return {
 			items: [],
+			loading: false,
 		};
 	},
 	mounted() {
@@ -30,6 +31,7 @@ export default {
 				this.$message.warning('请输入要搜索的关键词');
 				return;
 			}
+			this.loading = true;
 			api.query(this.word)
 				.then(response => {
 					const list = response.data.result.songs;
@@ -41,9 +43,11 @@ export default {
 						return item;
 					});
 					this.items = items;
+					this.loading = false;
 				})
 				.catch(function (error) {
 					console.log(error);
+					this.loading = false;
 				});
 		},
 		button(item) {

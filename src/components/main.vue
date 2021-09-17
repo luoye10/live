@@ -14,7 +14,20 @@
 				<div class="user-info">
 					<div class="avatar" @click="getPlayRecord">
 						<el-avatar v-if="user" :size="'medium'" :src="user.profile.avatarUrl"></el-avatar>
-						<div class="playRecord" ref="playRecord" v-if="show">
+						<div class="playRecord" v-if="open" v-loading="loading">
+							<div class="type">
+								<div class="type-box">
+									<el-select v-model="chartType" placeholder="请选择图表类型" @change="changeType">
+										<el-option
+											v-for="item in typeList"
+											:key="item.type"
+											:label="item.text"
+											:value="item.type"
+										>
+										</el-option>
+									</el-select>
+								</div>
+							</div>
 							<div class="content"></div>
 						</div>
 					</div>
@@ -46,7 +59,7 @@
 					<!-- 搜索结果 -->
 					<Search v-if="isShow" :word="word" @songSearch="getSearch"></Search>
 					<!-- 歌单列表详情 -->
-					<SongSheet :id="songListId" v-if="!isShow" @songList="getList" :index="index"></SongSheet>
+					<SongSheet :id="songListId" v-if="show" @songList="getList" :index="index"></SongSheet>
 				</div>
 			</div>
 			<div class="container" v-if="isOpen">
@@ -96,6 +109,13 @@ export default {
 			index: 0, // 当前播放的音乐的下标
 			user: null,
 			show: false,
+			open: false,
+			loading: false,
+			typeList: [
+				{ type: 'bar', text: '柱状图' },
+				{ type: 'line', text: '折线图' },
+			],
+			chartType: 'bar',
 		};
 	},
 	mounted() {
@@ -120,11 +140,13 @@ export default {
 		},
 		songDetail(list) {
 			this.songListId = list.id; // 这里修改了songListId的值，同过id属性传递给songsheet的值也会发生变化，就会触发里面的watch
+			this.show = true;
 			this.isShow = false;
-			this.show = false;
+			this.open = false;
 		},
 		query() {
 			this.isShow = true;
+			this.open = false;
 		},
 		getList(listText) {
 			this.listMsg = listText;
@@ -156,8 +178,10 @@ export default {
 				uid: this.user.profile.userId,
 				type: 0,
 			};
-			this.show = true;
-			this.isShow = true;
+			this.loading = true;
+			this.open = true;
+			this.show = false;
+			this.isShow = false;
 			api.getPlayRecord(params)
 				.then(res => {
 					let name = [],
@@ -167,52 +191,80 @@ export default {
 						name.push(item.song.name);
 						num.push(item.score);
 					});
-					let myChart = echarts.init(document.querySelector('.content'));
-					let option = {
-						tooltip: {},
-						legend: {
-							data: ['播放记录'],
-						},
-						xAxis: {
-							data: name,
-							axisLabel: {
-								show: true,
-								textStyle: {
-									color: 'aqua',
-									fontFamily: 'my',
+					if (!this.mychart) {
+						let myChart = echarts.init(document.querySelector('.content'));
+						this.mychart = myChart;
+						let barOption = {
+							toolbox: {
+								feature: {
+									saveAsImage: {},
 								},
 							},
-						},
-						yAxis: {},
-						series: [
-							{
-								name: '播放记录',
-								type: 'bar',
-								data: num,
-								showBackground: true,
-								itemStyle: {
-									color: 'aqua',
+							tooltip: {},
+							legend: {
+								data: ['播放记录'],
+							},
+							xAxis: {
+								data: name,
+								axisLabel: {
+									show: true,
+									textStyle: {
+										color: 'aqua',
+										fontFamily: 'my',
+									},
+									formatter: function (value) {
+										return value.split('').join('\n');
+									},
 								},
 							},
-						],
-						dataZoom: [
-							{
-								show: true,
-								start: 95,
-								end: 100,
+							yAxis: {
+								axisLabel: {
+									textStyle: {
+										color: 'aqua',
+									},
+								},
 							},
-							{
-								type: 'inside',
-								start: 94,
-								end: 100,
+							series: [
+								{
+									name: '播放记录',
+									type: 'bar',
+									data: num,
+									itemStyle: {
+										color: 'aqua',
+									},
+									smooth: true,
+									barWidth: 10,
+								},
+							],
+							dataZoom: [
+								{
+									type: 'slider',
+									show: true,
+									xAxisIndex: [0],
+									left: '9%',
+									bottom: 0,
+									start: 0,
+									end: 14,
+								},
+							],
+							grid: {
+								bottom: '25%',
 							},
-						],
-					};
-					myChart.setOption(option);
+						};
+						this.options = barOption;
+						this.mychart.setOption(barOption);
+					}
+					this.loading = false;
 				})
 				.catch(error => {
 					console.log(error);
+					this.loading = false;
 				});
+		},
+		changeType(type) {
+			// this.chartType = type;
+			this.options.series[0].type = type;
+			this.mychart.setOption(this.options);
 		},
 	},
 };
@@ -306,8 +358,17 @@ export default {
 			right: 0;
 			bottom: @bottom;
 			z-index: 10;
+			.type {
+				height: 10%;
+				.type-box {
+					width: 100px;
+					height: 30px;
+					cursor: pointer;
+					margin: 0 auto;
+				}
+			}
 			.content {
-				height: 100%;
+				height: 90%;
 			}
 		}
 		.el-dropdown {
