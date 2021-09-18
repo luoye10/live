@@ -194,7 +194,7 @@ export default {
 					if (!this.mychart) {
 						let myChart = echarts.init(document.querySelector('.content'));
 						this.mychart = myChart;
-						let barOption = {
+						let option = {
 							toolbox: {
 								feature: {
 									saveAsImage: {},
@@ -242,17 +242,17 @@ export default {
 									show: true,
 									xAxisIndex: [0],
 									left: '9%',
-									bottom: 0,
+									bottom: 40,
 									start: 0,
-									end: 14,
+									end: 19,
 								},
 							],
 							grid: {
-								bottom: '25%',
+								bottom: '40%',
 							},
 						};
-						this.options = barOption;
-						this.mychart.setOption(barOption);
+						this.options = option;
+						this.mychart.setOption(option);
 					}
 					this.loading = false;
 				})
@@ -262,13 +262,24 @@ export default {
 				});
 		},
 		changeType(type) {
-			// this.chartType = type;
 			this.options.series[0].type = type;
 			this.mychart.setOption(this.options);
 		},
 	},
 };
 </script>
+<style lang="less">
+.el-dropdown-menu {
+	width: 100px;
+	height: 40px;
+	border-radius: 5px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 40px;
+	padding: 0;
+	margin: 0;
+}
+</style>
 <style lang="less" scoped>
 @h: 80px;
 @bottom: 60px;
@@ -369,10 +380,12 @@ export default {
 			}
 			.content {
 				height: 90%;
+				margin-top: 30px;
 			}
 		}
 		.el-dropdown {
 			font-size: 20px;
+			position: relative;
 		}
 	}
 }

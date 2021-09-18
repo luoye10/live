@@ -28,6 +28,15 @@ export default {
 			},
 		};
 	},
+	mounted() {
+		window.addEventListener('keyup', e => {
+			if (e.code === 'Enter') {
+				if (this.ruleForm.username && this.ruleForm.password) {
+					this.login();
+				}
+			}
+		});
+	},
 	methods: {
 		login() {
 			this.$refs['loginForm'].validate(valid => {
