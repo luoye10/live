@@ -17,6 +17,16 @@
 import api from '../api/index';
 export default {
 	data() {
+		const pwdVal = (rule, value, callback) => {
+			var reg = /.{8,}/;
+			if (!value) {
+				callback(new Error('密码不能为空'));
+			} else if (!reg.test(value)) {
+				callback(new Error('密码最少为8个字符'));
+			} else {
+				callback();
+			}
+		};
 		return {
 			ruleForm: {
 				username: '',
@@ -24,20 +34,30 @@ export default {
 			},
 			rules: {
 				username: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
-				password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
+				password: [{ required: true, validator: pwdVal, trigger: 'blur' }],
 			},
 		};
 	},
 	mounted() {
-		window.addEventListener('keyup', e => {
-			if (e.code === 'Enter') {
-				if (this.ruleForm.username && this.ruleForm.password) {
-					this.login();
-				}
-			}
-		});
+		window.addEventListener('keyup', this.keyogin);
+	},
+	beforeDestroy() {
+		window.removeEventListener('keyup', this.keyogin);
 	},
 	methods: {
+		keyogin(e) {
+			if (e.code === 'Enter') {
+				// if (this.ruleForm.username && this.ruleForm.password) {
+				// 	this.login();
+				// }
+				this.$refs.loginForm.validate(valid => {
+					if (!valid) {
+						return;
+					}
+					this.login();
+				});
+			}
+		},
 		login() {
 			this.$refs['loginForm'].validate(valid => {
 				if (!valid) {
