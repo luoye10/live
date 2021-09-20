@@ -6,7 +6,7 @@
 					<el-input v-model="ruleForm.username"></el-input>
 				</el-form-item>
 				<el-form-item placeholder="密码" prop="password">
-					<el-input v-model="ruleForm.password" type="password"></el-input>
+					<el-input v-model="ruleForm.password" type="password" @keyup.enter.native="login"></el-input>
 				</el-form-item>
 			</el-form>
 			<el-button type="primary" @click="login">登录</el-button>
@@ -38,26 +38,7 @@ export default {
 			},
 		};
 	},
-	mounted() {
-		window.addEventListener('keyup', this.keyogin);
-	},
-	beforeDestroy() {
-		window.removeEventListener('keyup', this.keyogin);
-	},
 	methods: {
-		keyogin(e) {
-			if (e.code === 'Enter') {
-				// if (this.ruleForm.username && this.ruleForm.password) {
-				// 	this.login();
-				// }
-				this.$refs.loginForm.validate(valid => {
-					if (!valid) {
-						return;
-					}
-					this.login();
-				});
-			}
-		},
 		login() {
 			this.$refs['loginForm'].validate(valid => {
 				if (!valid) {
