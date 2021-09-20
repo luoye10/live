@@ -13,6 +13,11 @@ const routes = [
 		name: 'main',
 		component: () => import('./components/main.vue'),
 	},
+	{
+		path: '*',
+		name: '404',
+		component: () => import('./components/404.vue'),
+	},
 ];
 
 const router = new VueRouter({

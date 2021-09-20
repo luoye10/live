@@ -41,8 +41,8 @@
 </template>
 <script>
 import getStyle from '../util/getStyle';
+import bus from '../util/bus';
 export default {
-	props: ['songList', 'songSearch'],
 	data() {
 		return {
 			isPlay: false,
@@ -69,6 +69,12 @@ export default {
 		this.progress = this.$refs.progress;
 		// 注：返回的width值是一个包含单位('px')的字符串，所以要把最后两个字符去掉，同时把值转化为数字
 		this.width = +getStyle(this.progress, 'width').slice(0, -2);
+		bus.$on('songSearch', para => {
+			this.play(para);
+		});
+		bus.$on('songList', para => {
+			this.play(para);
+		});
 	},
 	methods: {
 		button() {
@@ -132,14 +138,6 @@ export default {
 		},
 		changeModel(type) {
 			window.playModel = type;
-		},
-	},
-	watch: {
-		songList(newVal) {
-			this.play(newVal);
-		},
-		songSearch(newVal) {
-			this.play(newVal);
 		},
 	},
 };

@@ -14,6 +14,7 @@
 <script>
 import api from '../api/index';
 import format from '../util/format';
+import bus from '../util/bus';
 export default {
 	props: ['word'],
 	data() {
@@ -59,7 +60,7 @@ export default {
 				}
 				item.url = url;
 				let obj = item;
-				this.$emit('songSearch', obj);
+				bus.$emit('songSearch', obj);
 			});
 		},
 	},

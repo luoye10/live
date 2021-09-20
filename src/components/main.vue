@@ -56,18 +56,7 @@
 					</ul>
 				</div>
 				<div class="song-list">
-					<component
-						:is="activeCom"
-						:id="songListId"
-						:index="index"
-						:word="word"
-						@songList="getList"
-						@songSearch="getSearch"
-					></component>
-					<!-- 搜索结果 -->
-					<!-- <Search v-if="isShow" :word="word" @songSearch="getSearch"></Search> -->
-					<!-- 歌单列表详情 -->
-					<!-- <SongSheet :id="songListId" v-if="show" @songList="getList" :index="index"></SongSheet> -->
+					<component :is="activeCom" :id="songListId" :index="index" :word="word"></component>
 				</div>
 			</div>
 			<div class="container" v-if="isOpen">
@@ -79,7 +68,7 @@
 			</div>
 
 			<!-- 底部 -->
-			<Player :songList="listMsg" :songSearch="searchMsg" @songInfo="getInfo" @playChange="playChange"></Player>
+			<Player @songInfo="getInfo" @playChange="playChange"></Player>
 			<div class="footer">
 				<audio src="" class="audio-play"></audio>
 			</div>
@@ -108,15 +97,11 @@ export default {
 			itemList: [],
 			songListId: '',
 			total: [],
-			isShow: false,
-			listMsg: '',
-			searchMsg: '',
 			songId: '',
 			songImg: '',
 			isOpen: false,
 			index: 0, // 当前播放的音乐的下标
 			user: null,
-			show: false,
 			open: false,
 			loading: false,
 			typeList: [
@@ -152,21 +137,9 @@ export default {
 			this.$nextTick(() => {
 				this.songListId = list.id; // 这里修改了songListId的值，同过id属性传递给songsheet的值也会发生变化，就会触发里面的watch
 			});
-			// this.show = true;
-			// this.isShow = false;
-			// this.open = false;
 		},
 		query() {
-			// this.isShow = true;
-			// this.open = false;
 			this.activeCom = 'Search';
-		},
-		getList(listText) {
-			this.listMsg = listText;
-			this.index = listText.index; // 保存下标，切换上一首，下一首需要用到
-		},
-		getSearch(searchText) {
-			this.searchMsg = searchText;
 		},
 		getInfo(param) {
 			this.songId = param.songId;

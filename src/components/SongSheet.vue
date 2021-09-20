@@ -22,6 +22,7 @@
 import api from '../api/index';
 import format from '../util/format';
 import ran from '../util/getRandom';
+import bus from '../util/bus';
 export default {
 	props: ['id', 'index'],
 	data() {
@@ -31,7 +32,9 @@ export default {
 			songId: '',
 		};
 	},
-	mounted() {},
+	mounted() {
+		console.log(this.age, this.skill);
+	},
 	methods: {
 		getSong() {
 			this.loading = true;
@@ -72,7 +75,7 @@ export default {
 				}
 				item.url = url;
 				item.index = index;
-				this.$emit('songList', item);
+				bus.$emit('songList', item);
 			});
 		},
 	},
