@@ -8,7 +8,7 @@
 					<span class="text">网易云音乐</span>
 				</div>
 				<div class="search">
-					<input type="text" class="words" v-model="word" />
+					<el-input type="text" class="words" v-model="word" @keyup.enter.native="query" />
 					<div class="btn" @click="query">搜索</div>
 				</div>
 				<div class="user-info">
@@ -56,10 +56,18 @@
 					</ul>
 				</div>
 				<div class="song-list">
+					<component
+						:is="activeCom"
+						:id="songListId"
+						:index="index"
+						:word="word"
+						@songList="getList"
+						@songSearch="getSearch"
+					></component>
 					<!-- 搜索结果 -->
-					<Search v-if="isShow" :word="word" @songSearch="getSearch"></Search>
+					<!-- <Search v-if="isShow" :word="word" @songSearch="getSearch"></Search> -->
 					<!-- 歌单列表详情 -->
-					<SongSheet :id="songListId" v-if="show" @songList="getList" :index="index"></SongSheet>
+					<!-- <SongSheet :id="songListId" v-if="show" @songList="getList" :index="index"></SongSheet> -->
 				</div>
 			</div>
 			<div class="container" v-if="isOpen">
@@ -116,6 +124,7 @@ export default {
 				{ type: 'line', text: '折线图' },
 			],
 			chartType: 'bar',
+			activeCom: '',
 		};
 	},
 	mounted() {
@@ -139,14 +148,18 @@ export default {
 				});
 		},
 		songDetail(list) {
-			this.songListId = list.id; // 这里修改了songListId的值，同过id属性传递给songsheet的值也会发生变化，就会触发里面的watch
-			this.show = true;
-			this.isShow = false;
-			this.open = false;
+			this.activeCom = 'SongSheet';
+			this.$nextTick(() => {
+				this.songListId = list.id; // 这里修改了songListId的值，同过id属性传递给songsheet的值也会发生变化，就会触发里面的watch
+			});
+			// this.show = true;
+			// this.isShow = false;
+			// this.open = false;
 		},
 		query() {
-			this.isShow = true;
-			this.open = false;
+			// this.isShow = true;
+			// this.open = false;
+			this.activeCom = 'Search';
 		},
 		getList(listText) {
 			this.listMsg = listText;

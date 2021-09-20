@@ -204,7 +204,7 @@ export default {
 			display: inline-block;
 			font-size: 25px;
 			cursor: pointer;
-			margin: 0 10px;
+			margin: 0 8px;
 			vertical-align: middle;
 		}
 	}

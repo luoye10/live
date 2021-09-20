@@ -1,5 +1,5 @@
 <template>
-	<div class="reveal" v-lodaing="loading">
+	<div class="reveal">
 		<ul class="song-list">
 			<li class="song" v-for="item in items" :key="item.message" @click="button(item)">
 				<img :src="item.img" class="img" />
