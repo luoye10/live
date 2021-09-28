@@ -81,7 +81,6 @@ export default {
 	},
 	watch: {
 		id(newVal) {
-			// oldVal 就是id原来的值，newVal就是id改变之后的新值
 			this.getSong(newVal);
 		},
 		index(newVal) {
@@ -121,7 +120,6 @@ export default {
 		font-size: 20px;
 		list-style: none;
 		cursor: pointer;
-		// 偶数选择器
 		&:nth-child(even) {
 			background: rgba(170, 170, 170, 0.2);
 		}

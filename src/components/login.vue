@@ -45,8 +45,6 @@ export default {
 					console.log('rules验证没通过');
 					return;
 				}
-				// rules 通过了，可以正式开始调接口登录
-				// console.log('start login');
 				this.loginRequest();
 				// 调用登录接口，登录成功之后，开始跳转到别的组件
 			});

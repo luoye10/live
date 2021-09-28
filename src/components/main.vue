@@ -135,7 +135,7 @@ export default {
 		songDetail(list) {
 			this.activeCom = 'SongSheet';
 			this.$nextTick(() => {
-				this.songListId = list.id; // 这里修改了songListId的值，同过id属性传递给songsheet的值也会发生变化，就会触发里面的watch
+				this.songListId = list.id;
 			});
 		},
 		query() {
@@ -166,8 +166,6 @@ export default {
 			};
 			this.loading = true;
 			this.open = true;
-			this.show = false;
-			this.isShow = false;
 			api.getPlayRecord(params)
 				.then(res => {
 					let name = [],
