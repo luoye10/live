@@ -1,11 +1,23 @@
 import axios from './config';
 
 export default {
-	login: params => {
-		return axios.get('/login/cellphone', params);
+	createKey: () => {
+		return axios.get('/login/qr/key');
+	},
+	createMsg: params => {
+		return axios.get('/login/qr/create?key=' + params + '&qrimg=true');
+	},
+	check: params => {
+		return axios.get('/login/qr/check?key=' + params);
 	},
 	query: word => {
 		return axios.get('/search?keywords=' + word);
+	},
+	status: () => {
+		return axios.get('/login/status');
+	},
+	userInfo: id => {
+		return axios.get('/user/detail/?uid=' + id);
 	},
 	getSongList: id => {
 		return axios.get('/user/playlist?uid=' + id);
